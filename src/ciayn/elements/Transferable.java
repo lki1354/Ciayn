@@ -1,13 +1,11 @@
 package ciayn.elements;
 
 
-/**
- * Created by lukas on 13.01.17.
- */
-
 public interface Transferable {
 
-    void addOutputConnection(Transferable connection);
+    void addOutputConnection(Transferable connection) throws TransferableException;
+
+    void removeOutputConnection(Transferable connection) throws TransferableException;
 
     void loadInput(Signal signal);
 

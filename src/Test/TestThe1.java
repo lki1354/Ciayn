@@ -7,7 +7,7 @@ import ciayn.elements.*;
  */
 
 public  class TestThe1 {
-        public static void main(String args[]) {
+        public static void main(String args[]) throws TransferableException {
 
                 Updater<String> counter = new Updater<String>() {
                         private int i =0;
@@ -34,6 +34,7 @@ public  class TestThe1 {
                outWire.addOutputConnection(show);
                hawaii.setInterval(500);
                inWire.loadInput(valueIN);
+               //hawaii.addInputSignal(valueIN);
                hawaii.run();
             System.out.println("start Test 1");
             try {

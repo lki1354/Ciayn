@@ -6,12 +6,16 @@ import java.util.TimerTask;
 /**
  * Created by lukas on 13.01.17.
  */
-public class Environmental<T> implements Transferable,Operable{
+public class Environmental<T> extends Block implements Operable{
     private  int interval;
     private Timer timekeeper = new Timer();
     private Signal<T> internalSignal;
-    private Transferable output;
-
+    //private Transferable output = null;
+/*
+    public void addInputSignal(Signal signal){
+        internalSignal = signal;
+    }
+*/
     @Override
     public void run() {
         TimerTask runProcess = new TimerTask() {
@@ -24,9 +28,14 @@ public class Environmental<T> implements Transferable,Operable{
     }
     private void process(){
         internalSignal.update();
+        doOneIteration();
+    }
+    private void doOneIteration(){
         System.out.println("Env: "+internalSignal.getValue());
         output.loadInput(internalSignal);
+
     }
+
     @Override
     public void pause() {
         timekeeper.cancel();
@@ -48,12 +57,9 @@ public class Environmental<T> implements Transferable,Operable{
     }
 
     @Override
-    public void addOutputConnection(Transferable connection){
-        output = connection;
-    }
-    @Override
     public void loadInput(Signal signal) {
         internalSignal = signal;
+        doOneIteration();
     }
 
 }

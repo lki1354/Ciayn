@@ -13,6 +13,14 @@ public class Wire implements Transferable{
         outputs.add(connection);
     }
 
+    @Override
+    public void removeOutputConnection(Transferable connection) throws TransferableException {
+        if (!outputs.remove(connection)) {
+            throw new TransferableException("connection is not connected with this blocks");
+        }
+
+    }
+
     public void loadInput(Signal signal){
         for (Transferable output: outputs ) {
             output.loadInput(signal);
