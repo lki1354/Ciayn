@@ -1,21 +1,26 @@
 package ciayn.elements;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by lukas on 13.01.17.
- */
+
 public class Environmental<T> extends Block implements Operable{
-    private  int interval;
+    private long interval = 1000;
     private Timer timekeeper = new Timer();
-    private Signal<T> internalSignal;
-    //private Transferable output = null;
-/*
-    public void addInputSignal(Signal signal){
-        internalSignal = signal;
+    private Signal inputSignal;
+    private List<Block> blocks = new ArrayList<>();
+    private List<Wire>  connections = new ArrayList<>();
+    private Transferable input = null;
+
+    public void setInput(Transferable input){
+        this.input = input;
     }
-*/
+    public void setOutput(Transferable output){
+        this.output = output;
+    }
+
     @Override
     public void run() {
         TimerTask runProcess = new TimerTask() {
@@ -27,13 +32,12 @@ public class Environmental<T> extends Block implements Operable{
         timekeeper.scheduleAtFixedRate(runProcess,0,interval);
     }
     private void process(){
-        internalSignal.update();
+        inputSignal.update();
         doOneIteration();
     }
     private void doOneIteration(){
-        System.out.println("Env: "+internalSignal.getValue());
-        output.loadInput(internalSignal);
-
+        System.out.println("... do one iteration with input signal: "+inputSignal.getValue());
+        input.loadInput(inputSignal);
     }
 
     @Override
@@ -58,8 +62,60 @@ public class Environmental<T> extends Block implements Operable{
 
     @Override
     public void loadInput(Signal signal) {
-        internalSignal = signal;
-        doOneIteration();
+        this.inputSignal = signal;
+        this.doOneIteration();
     }
 
+    public void addBlock(Block block) throws EnvironmentalException {
+        if(this.blocks.contains(block)){
+            throw new EnvironmentalException("Environmental contains this block!");
+        }else {
+            this.blocks.add(block);
+        }
+    }
+    public void addWire(Wire wire) throws EnvironmentalException {
+        if(this.connections.contains(wire)){
+            throw new EnvironmentalException("Environmental contains this wire!");
+        }else {
+            this.connections.add(wire);
+        }
+    }
+    public void connect(Wire fromWire, Block toBlock){
+        if(!this.connections.contains(fromWire)){
+            this.connections.add(fromWire);
+        }
+        if(!this.blocks.contains(toBlock)){
+            this.blocks.add(toBlock);
+        }
+        fromWire.addOutputConnection(toBlock);
+    }
+    public void connect(Block fromBlock, Wire toWire) throws TransferableException {
+        if(!this.blocks.contains(fromBlock)){
+            this.blocks.add(fromBlock);
+        }
+        if(!this.connections.contains(toWire)){
+            this.connections.add(toWire);
+        }
+        fromBlock.addOutputConnection(toWire);
+    }
+    public void connect(Block fromBlock, Block toBlock) throws TransferableException {
+        if(!this.blocks.contains(fromBlock)){
+            this.blocks.add(fromBlock);
+        }
+        if(!this.blocks.contains(toBlock)){
+            this.blocks.add(toBlock);
+        }
+        fromBlock.addOutputConnection(toBlock);
+
+    }
+    public void connect(Wire fromWire, Wire toWire){
+        if(!this.connections.contains(fromWire)){
+            this.connections.add(fromWire);
+        }
+        if(!this.connections.contains(toWire)){
+            this.connections.add(toWire);
+        }
+        fromWire.addOutputConnection(toWire);
+
+    }
 }

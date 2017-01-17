@@ -1,6 +1,11 @@
 package Test;
 
+import ciayn.basicTerms.Adder;
+import ciayn.basicTerms.Integral;
+import ciayn.basicTerms.Proportional;
 import ciayn.elements.*;
+
+import java.util.Timer;
 
 /**
  * Created by lukas on 14.01.17.
@@ -9,12 +14,12 @@ import ciayn.elements.*;
 public  class TestThe1 {
         public static void main(String args[]) throws TransferableException {
 
-                Updater<String> counter = new Updater<String>() {
+                Updater counter = new Updater() {
                         private int i =0;
                         @Override
-                        public String getValue() {
+                        public float getValue() {
                                 i++;
-                                return "Run "+i+" is going on!";
+                                return i;
                         }
                 };
                 Transferable show = new Wire() {
@@ -23,27 +28,37 @@ public  class TestThe1 {
                         System.out.println("Output: "+signal.getValue());
                     }
                 };
-
-               Signal<String> valueIN = new Signal<>("Hallo 0!");
-               valueIN.setUpdate(counter);
+            double dt = 0.001;
+               Signal setPoint= new Signal(10);
+               setPoint.setUpdate(counter);
                Wire inWire = new Wire();
+               Proportional pController = new Proportional(10);
+            Integral iTerm = new Integral((float)0.01, (float)0.001);
+            Adder sum = new Adder();
                Wire outWire = new Wire();
-               Environmental<String> hawaii = new Environmental<>();
-               inWire.addOutputConnection(hawaii);
-               hawaii.addOutputConnection(outWire);
-               outWire.addOutputConnection(show);
-               hawaii.setInterval(500);
-               inWire.loadInput(valueIN);
-               //hawaii.addInputSignal(valueIN);
-               hawaii.run();
-            System.out.println("start Test 1");
-            try {
-                Thread.sleep(2000);
-                hawaii.stop();
-                System.out.println("End Test 1");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Wire outWire2 = new Wire();
+               Environmental testEnv= new Environmental();
+               testEnv.setInput(inWire);
+               testEnv.connect(inWire,pController);
+            testEnv.connect(inWire,iTerm);
+               testEnv.connect(pController,outWire);
+            testEnv.connect(iTerm,outWire2);
+            testEnv.connect(outWire2,sum);
+            testEnv.connect(outWire,sum);
+               testEnv.setOutput(sum);
+               sum.addOutputConnection(show);
+            testEnv.setInterval(1);
+               testEnv.loadInput(setPoint);
+               testEnv.run();
+               System.out.println("start Test 1");
+                try {
+                    Thread.sleep(5);
+                    testEnv.stop();
+                    System.out.println("End Test 1");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //inWire.draw();
 
 
         }

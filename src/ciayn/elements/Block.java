@@ -5,11 +5,25 @@ package ciayn.elements;
  */
 public abstract class Block implements Transferable{
     protected Transferable output = null;
+    protected boolean isConnected = false;
+
+    @Override
+    public boolean isInputConnected() {
+        return this.isConnected;
+    }
+
+    @Override
+    public void addInputConnection(Transferable input) {
+        this.isConnected = true;
+    }
 
     @Override
     public void addOutputConnection(Transferable connection) throws TransferableException {
         if (output == null){
-            output = connection;
+            if(!connection.isInputConnected()){
+                output = connection;
+                output.addInputConnection(this);
+            }
         }else {
             throw new TransferableException("a abstract block class can have only one output connection");
         }
@@ -25,5 +39,13 @@ public abstract class Block implements Transferable{
     @Override
     public void loadInput(Signal signal) {
         output.loadInput(signal);
+    }
+
+    @Override
+    public void draw(){
+        System.out.println("-------");
+        System.out.println("|     |");
+        System.out.println("-------");
+        output.draw();
     }
 }

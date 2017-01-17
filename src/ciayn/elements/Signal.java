@@ -5,27 +5,35 @@ package ciayn.elements;
  */
 
 
-public class Signal<T> {
-    private T value;
-    private int i = 0;
-    private Updater<T> updater;
+public class Signal {
+    private float value;
+    private Updater updater;
 
-    public Signal(T value){
+
+    public Signal(float value){
         this.value=value;
     }
+    public Signal(){
+        this.value = 0;
+    }
+
     public void setUpdate(Updater updater){
         this.updater= updater;
     }
 
 
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
     public void update(){
         value = updater.getValue();
+    }
+
+    public float getValue() {
+        return value;
+    }
+    public void addUp(float toAdd){
+        this.value += toAdd;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
     }
 }

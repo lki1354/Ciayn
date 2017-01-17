@@ -8,9 +8,23 @@ import java.util.List;
  */
 public class Wire implements Transferable{
     private List<Transferable>outputs = new ArrayList<>();
+    private boolean isConnected = false;
 
     public void addOutputConnection(Transferable connection){
-        outputs.add(connection);
+        if(!connection.isInputConnected()) {
+            outputs.add(connection);
+            connection.addInputConnection(this);
+        }
+    }
+
+    @Override
+    public boolean isInputConnected() {
+        return this.isConnected;
+    }
+
+    @Override
+    public void addInputConnection(Transferable input) {
+        this.isConnected = true;
     }
 
     @Override
@@ -24,6 +38,15 @@ public class Wire implements Transferable{
     public void loadInput(Signal signal){
         for (Transferable output: outputs ) {
             output.loadInput(signal);
+        }
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("       ");
+        System.out.println("-------");
+        for ( Transferable output: outputs) {
+            output.draw();
         }
     }
 
