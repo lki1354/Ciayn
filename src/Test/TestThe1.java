@@ -33,7 +33,7 @@ public  class TestThe1 {
                setPoint.setUpdate(counter);
                Wire inWire = new Wire();
                Proportional pController = new Proportional(10);
-            Integral iTerm = new Integral((float)0.01, (float)0.001);
+            Integral iTerm = new Integral((float)10, (float)0.001);
             Adder sum = new Adder();
                Wire outWire = new Wire();
             Wire outWire2 = new Wire();
