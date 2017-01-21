@@ -10,7 +10,7 @@ public class Derivative extends Block {
     private float kd;
     private float dt;
     private float lastInput;
-    private Signal sum = new Signal();
+    private Signal diff = new Signal();
 
     public Derivative(float kd, float dt){
         this.kd = kd;
@@ -29,8 +29,8 @@ public class Derivative extends Block {
 
     @Override
     public void loadInput(Signal signal) {
-        this.sum.setValue((signal.getValue()-this.lastInput) * this.kd / this.dt);
-        this.output.loadInput(this.sum);
+        this.diff.setValue((signal.getValue()-this.lastInput) * this.kd / this.dt);
+        this.output.loadInput(this.diff);
     }
 
     public float getKd() {

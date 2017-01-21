@@ -1,5 +1,8 @@
 package ciayn.elements;
 
+import ciayn.basicTerms.PIDController;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -117,5 +120,18 @@ public class Environmental<T> extends Block implements Operable{
         }
         fromWire.addOutputConnection(toWire);
 
+    }
+    public Block createPIDController(float kp, float ki, float kd, float dt, Signal target, Signal actual, Signal output) throws EnvironmentalException, TransferableException {
+        if (this.blocks.size() >=1 ){
+            throw new EnvironmentalException("only one PIDControlxler is allowed in a environmental!");
+        }
+        Block pid = new PIDController(kp,ki ,kd, dt);
+        Wire pidOut = new Wire();
+        this.blocks.add(0,pid);
+        this.addInputConnection(pid);
+        this.addOutputConnection(pid);
+        this.setInterval((int)dt*1000);
+
+        return this.blocks.get(0);
     }
 }

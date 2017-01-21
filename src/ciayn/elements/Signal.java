@@ -29,7 +29,10 @@ public class Signal {
     public float getValue() {
         return value;
     }
-    public void addUp(float toAdd){
+    public void addValue(float toAdd){
+        this.value += toAdd;
+    }
+    public void subtractValue(float toAdd){
         this.value += toAdd;
     }
 

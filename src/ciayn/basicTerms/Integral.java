@@ -28,7 +28,7 @@ public class Integral extends Block {
 
     @Override
     public void loadInput(Signal signal) {
-        this.sum.addUp(signal.getValue() * this.ki * this.dt);
+        this.sum.addValue(signal.getValue() * this.ki * this.dt);
         this.output.loadInput(this.sum);
     }
 

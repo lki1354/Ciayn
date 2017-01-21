@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * Created by lukas on 17.01.17.
  */
-public class Adder extends Block {
-    private Signal sum = new Signal();
+public class Subtracter extends Block {
+    private Signal diff = new Signal();
     private List<Transferable> inputs = new ArrayList<>();
     private int inputUpdates = 0;
 
@@ -36,13 +36,13 @@ public class Adder extends Block {
     @Override
     public void loadInput(Signal signal) {
         if(this.inputUpdates == 0){
-            this.sum.setValue(0);
+            this.diff.setValue(0);
         }
-        this.sum.addValue(signal.getValue());
+        this.diff.subtractValue(signal.getValue());
         this.inputUpdates++;
         if(this.inputUpdates >= this.inputs.size()){
             this.inputUpdates = 0;
-            this.output.loadInput(this.sum);
+            this.output.loadInput(this.diff);
         }
     }
 
