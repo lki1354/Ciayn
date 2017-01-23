@@ -1,5 +1,7 @@
 package ciayn.elements;
 
+import ciayn.elements.signal.Valuable;
+
 /**
  * Created by lukas on 14.01.17.
  */
@@ -37,8 +39,8 @@ public abstract class Block implements Transferable{
         }
     }
     @Override
-    public void loadInput(Signal signal) {
-        output.loadInput(signal);
+    public void loadInput(Valuable value) {
+        output.loadInput(value);
     }
 
     @Override

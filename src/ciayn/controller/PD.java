@@ -1,12 +1,12 @@
-package ciayn.basicTerms;
+package ciayn.controller;
 
 import ciayn.elements.Block;
-import ciayn.elements.Signal;
+import ciayn.elements.signal.Signal;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PDController extends Block {
+public class PD extends Block {
     private float kd;
     private float kp;
     private float dt;
@@ -14,17 +14,17 @@ public class PDController extends Block {
     private Signal out = new Signal();
     private Signal e = new Signal();
 
-    public PDController(float kd, float dt){
+    public PD(float kd, float dt){
         this.kd = kd;
         this.dt = dt;
         this.lastInput = 0;
     }
-    public PDController(float kd, float dt, float lastInit){
+    public PD(float kd, float dt, float lastInit){
         this.kd = kd;
         this.dt = dt;
         this.lastInput = lastInit;
     }
-    public PDController(){
+    public PD(){
         this.kd = 0;
         this.lastInput = 0;
     }

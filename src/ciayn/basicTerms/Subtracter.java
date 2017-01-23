@@ -1,7 +1,7 @@
 package ciayn.basicTerms;
 
 import ciayn.elements.Block;
-import ciayn.elements.Signal;
+import ciayn.elements.signal.Signal;
 import ciayn.elements.Transferable;
 import ciayn.elements.TransferableException;
 

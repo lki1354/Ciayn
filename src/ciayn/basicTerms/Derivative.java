@@ -1,23 +1,24 @@
 package ciayn.basicTerms;
 
 import ciayn.elements.Block;
-import ciayn.elements.Signal;
+import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Valuable;
 
 /**
  * Created by lukas on 17.01.17.
  */
 public class Derivative extends Block {
-    private float kd;
-    private float dt;
-    private float lastInput;
-    private Signal diff = new Signal();
+    private Number kd;
+    private Number dt;
+    private Number lastInput;
+    private Valuable diff;
 
-    public Derivative(float kd, float dt){
+    public Derivative(Number kd, Number dt){
         this.kd = kd;
         this.dt = dt;
         this.lastInput = 0;
     }
-    public Derivative(float kd, float dt, float lastInit){
+    public Derivative(Number kd, Number dt, Number lastInit){
         this.kd = kd;
         this.dt = dt;
         this.lastInput = lastInit;
@@ -28,24 +29,27 @@ public class Derivative extends Block {
     }
 
     @Override
-    public void loadInput(Signal signal) {
-        this.diff.setValue((signal.getValue()-this.lastInput) * this.kd / this.dt);
+    public void loadInput(Valuable value) {
+        this.diff = value;
+        this.diff.subtractValue(this.lastInput);
+        this.diff.multiplyValue(this.kd);
+        this.diff.divideValue(this.dt);
         this.output.loadInput(this.diff);
     }
 
-    public float getKd() {
+    public Number getKd() {
         return this.kd;
     }
 
-    public void setKd(float kd) {
+    public void setKd(Number kd) {
         this.kd = kd;
     }
 
-    public float getDt() {
+    public Number getDt() {
         return this.dt;
     }
 
-    public void setDt(float dt) {
+    public void setDt(Number dt) {
         this.dt = dt;
     }
 }

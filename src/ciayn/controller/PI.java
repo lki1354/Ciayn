@@ -1,13 +1,12 @@
-package ciayn.basicTerms;
+package ciayn.controller;
 
 import ciayn.elements.Block;
-import ciayn.elements.Signal;
+import ciayn.elements.signal.Signal;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PIDController extends Block {
-    private float kd;
+public class PI extends Block {
     private float kp;
     private float ki;
     private float dt;
@@ -16,20 +15,19 @@ public class PIDController extends Block {
     private Signal e = new Signal();
     private Signal p = new Signal();
     private Signal i = new Signal();
-    private Signal d = new Signal();
 
-    public PIDController(float kp, float ki, float kd, float dt){
-        this.kd = kd;
+    public PI(float ki, float dt){
+        this.ki = ki;
         this.dt = dt;
         this.lastInput = 0;
     }
-    public PIDController(float kd, float dt, float lastInit){
-        this.kd = kd;
+    public PI(float kd, float dt, float lastInit){
+        this.ki = kd;
         this.dt = dt;
         this.lastInput = lastInit;
     }
-    public PIDController(){
-        this.kd = 0;
+    public PI(){
+        this.ki = 0;
         this.lastInput = 0;
     }
 
@@ -37,8 +35,7 @@ public class PIDController extends Block {
     public void loadInput(Signal error) {
         this.p.setValue(error.getValue()*this.kp);
         this.i.addValue(error.getValue()*this.ki*this.dt);
-        this.d.setValue((error.getValue()-this.lastInput) * this.kd / this.dt);
-        this.out.setValue(p.getValue()+i.getValue()+d.getValue());
+        this.out.setValue(p.getValue()+i.getValue());
         this.output.loadInput(this.out );
     }
 
@@ -46,18 +43,10 @@ public class PIDController extends Block {
         this.e.setValue(target.getValue()-actual.getValue());
         this.p.setValue(e.getValue()*this.kp);
         this.i.addValue(e.getValue()*this.ki*this.dt);
-        this.d.setValue((e.getValue()-this.lastInput) * this.kd / this.dt);
-        this.out.setValue(p.getValue()+i.getValue()+d.getValue());
+        this.out.setValue(p.getValue()+i.getValue());
         this.output.loadInput(this.out );
     }
 
-    public float getKd() {
-        return this.kd;
-    }
-
-    public void setKd(float kd) {
-        this.kd = kd;
-    }
 
     public float getDt() {
         return this.dt;

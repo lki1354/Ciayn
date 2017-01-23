@@ -1,4 +1,4 @@
-package ciayn.elements;
+package ciayn;
 
 /**
  * Created by lukas on 13.01.17.

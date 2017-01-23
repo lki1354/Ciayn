@@ -1,11 +1,11 @@
 package Test;
 
+import ciayn.Environmental;
 import ciayn.basicTerms.Adder;
 import ciayn.basicTerms.Integral;
 import ciayn.basicTerms.Proportional;
 import ciayn.elements.*;
-
-import java.util.Timer;
+import ciayn.elements.signal.Signal;
 
 /**
  * Created by lukas on 14.01.17.

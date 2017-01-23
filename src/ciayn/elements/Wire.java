@@ -1,5 +1,8 @@
 package ciayn.elements;
 
+import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Valuable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,11 @@ import java.util.List;
 public class Wire implements Transferable{
     private List<Transferable>outputs = new ArrayList<>();
     private boolean isConnected = false;
+    private Signal signal = null;
+
+    public Wire(Signal signal){
+        this.signal = signal;
+    }
 
     public void addOutputConnection(Transferable connection){
         if(!connection.isInputConnected()) {
@@ -34,10 +42,11 @@ public class Wire implements Transferable{
         }
 
     }
-
-    public void loadInput(Signal signal){
+    @Override
+    public void loadInput(Valuable value){
+        this.signal.setActualValue(value);
         for (Transferable output: outputs ) {
-            output.loadInput(signal);
+            output.loadInput(value);
         }
     }
 

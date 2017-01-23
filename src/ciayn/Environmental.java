@@ -1,15 +1,18 @@
-package ciayn.elements;
+package ciayn;
 
-import ciayn.basicTerms.PIDController;
+import ciayn.controller.PID;
+import ciayn.elements.*;
+import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Updatable;
+import ciayn.elements.signal.Valuable;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Environmental<T> extends Block implements Operable{
+public class Environmental extends Block implements Operable {
     private long interval = 1000;
     private Timer timekeeper = new Timer();
     private Signal inputSignal;
@@ -35,12 +38,12 @@ public class Environmental<T> extends Block implements Operable{
         timekeeper.scheduleAtFixedRate(runProcess,0,interval);
     }
     private void process(){
-        inputSignal.update();
+        inputSignal.updateActualValue();
         doOneIteration();
     }
     private void doOneIteration(){
-        System.out.println("... do one iteration with input signal: "+inputSignal.getValue());
-        input.loadInput(inputSignal);
+        System.out.println("... do one iteration with input signal: "+inputSignal.getActualValue().getValue());
+        input.loadInput(inputSignal.getActualValue());
     }
 
     @Override
@@ -64,8 +67,8 @@ public class Environmental<T> extends Block implements Operable{
     }
 
     @Override
-    public void loadInput(Signal signal) {
-        this.inputSignal = signal;
+    public void loadInput(Valuable value) {
+        this.inputSignal = value;
         this.doOneIteration();
     }
 
@@ -125,7 +128,7 @@ public class Environmental<T> extends Block implements Operable{
         if (this.blocks.size() >=1 ){
             throw new EnvironmentalException("only one PIDControlxler is allowed in a environmental!");
         }
-        Block pid = new PIDController(kp,ki ,kd, dt);
+        Block pid = new PID(kp,ki ,kd, dt);
         Wire pidOut = new Wire();
         this.blocks.add(0,pid);
         this.addInputConnection(pid);

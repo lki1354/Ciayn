@@ -1,6 +1,8 @@
 package ciayn.elements;
 
 
+import ciayn.elements.signal.Valuable;
+
 public interface Transferable {
 
     void addOutputConnection(Transferable connection) throws TransferableException;
@@ -9,7 +11,7 @@ public interface Transferable {
 
     void removeOutputConnection(Transferable connection) throws TransferableException;
 
-    void loadInput(Signal signal);
+    void loadInput(Valuable value);
 
     void draw();
 
