@@ -73,7 +73,9 @@ public class PID extends Controller {
 
     @Override
     public Value runAlgorithm(Value e) {
-        this.dt = e.getTimeStamp() - this.u.getTimeStamp();
+        if (this.dt == null) {
+            this.dt = e.getTimeStamp() - this.u.getTimeStamp();
+        }
         this.u.setValue(e);
 
         this.d.setValue(e);

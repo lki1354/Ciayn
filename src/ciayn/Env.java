@@ -35,7 +35,7 @@ public abstract class Env implements Operable {
     }
     private void updateInputSignals(){
          for (Input input: this.inputSignals ) {
-            input.updateActualValue();
+            input.getValue();
         }
     }
     private void process(){

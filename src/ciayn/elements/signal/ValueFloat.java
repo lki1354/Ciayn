@@ -9,11 +9,12 @@ public class ValueFloat extends Value {
 
     public ValueFloat(){
         this.value = 0;
-        this.timeStamp = 0;
+        this.timeStamp = System.nanoTime()/1000000000f;
     }
 
     public ValueFloat(float value){
         this.setValue(value);
+        this.timeStamp = System.nanoTime()/1000000000f;
     }
 
     public ValueFloat(float value, float timeStamp){
