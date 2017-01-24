@@ -9,7 +9,6 @@ public class Angle extends Unit {
     private Angle(){
         super("Angle","°");
     }
-    @Override
     public Unit getUnit(){
         return this.angle;
     }

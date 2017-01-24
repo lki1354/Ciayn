@@ -40,7 +40,8 @@ public abstract class Block implements Transferable{
     }
     @Override
     public void loadInput(Valuable value) {
-        output.loadInput(value);
+        value = this.runAlgorithm(value);
+        this.output.loadInput(value);
     }
 
     @Override
@@ -50,4 +51,5 @@ public abstract class Block implements Transferable{
         System.out.println("-------");
         output.draw();
     }
+    public abstract Valuable runAlgorithm(Valuable input);
 }

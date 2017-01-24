@@ -1,59 +1,64 @@
 package ciayn.controller;
 
 import ciayn.elements.Block;
-import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Valuable;
 
 /**
  * Created by lukas on 17.01.17.
  */
 public class PD extends Block {
-    private float kd;
-    private float kp;
-    private float dt;
-    private float lastInput;
-    private Signal out = new Signal();
-    private Signal e = new Signal();
+    private Number kd;
+    private Number kp;
+    private Number dt;
+    private Valuable up = null;
+    private Valuable ud = null;
+    private Valuable e1 = null;
 
-    public PD(float kd, float dt){
+    public PD(Number kd, Number kp){
         this.kd = kd;
-        this.dt = dt;
-        this.lastInput = 0;
+        this.kp= kp;
     }
-    public PD(float kd, float dt, float lastInit){
+    public PD(Number kd, Number kp, Number dt){
         this.kd = kd;
+        this.kp = kp;
         this.dt = dt;
-        this.lastInput = lastInit;
     }
     public PD(){
-        this.kd = 0;
-        this.lastInput = 0;
     }
 
-    @Override
-    public void loadInput(Signal error) {
-        this.out.setValue((error.getValue()-this.lastInput) * this.kd / this.dt + this.kp*error.getValue());
-        this.output.loadInput(this.out );
-    }
-
-    public void loadInput(Signal target, Signal actual) {
-        this.e.setValue(target.getValue()-actual.getValue());
-        this.out.setValue((this.e.getValue()-this.lastInput) * this.kd / this.dt + this.kp*this.e.getValue());
-        this.output.loadInput(this.out );
-    }
-
-    public float getKd() {
+    public Number getKd() {
         return this.kd;
     }
 
-    public void setKd(float kd) {
+    public void setKd(Number kd) {
         this.kd = kd;
     }
 
-    public float getDt() {
+    public Number getDt() {
         return this.dt;
     }
 
-    public void setDt(float dt) {
+    public void setDt(Number dt) {
         this.dt = dt;
+    }
+
+    @Override
+    public Valuable runAlgorithm(Valuable e) {
+        this.ud = e;
+        this.ud.subtractValue(this.e1.getValue());
+        this.ud.multiplyValue(this.kd);
+        this.ud.divideValue(this.dt);
+
+        this.up = e;
+        this.up.multiplyValue(this.kp);
+        this.up.addValue(this.ud.getValue());
+        return this.up;
+    }
+
+    public void setKp(Number kp) {
+        this.kp = kp;
+    }
+    public Number getKp() {
+        return this.kp;
     }
 }

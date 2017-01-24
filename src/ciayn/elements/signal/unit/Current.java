@@ -9,7 +9,6 @@ public class Current extends Unit {
     private Current(){
         super("Current","A");
     }
-    @Override
     public Unit getUnit(){
         return this.current;
     }

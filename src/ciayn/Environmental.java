@@ -3,8 +3,10 @@ package ciayn;
 import ciayn.controller.PID;
 import ciayn.elements.*;
 import ciayn.elements.signal.Signal;
-import ciayn.elements.signal.Updatable;
+import ciayn.elements.signal.SignalFloat;
 import ciayn.elements.signal.Valuable;
+import ciayn.elements.signal.unit.Voltage;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,6 @@ public class Environmental extends Block implements Operable {
     private List<Block> blocks = new ArrayList<>();
     private List<Wire>  connections = new ArrayList<>();
     private Transferable input = null;
-
     public void setInput(Transferable input){
         this.input = input;
     }
@@ -67,9 +68,8 @@ public class Environmental extends Block implements Operable {
     }
 
     @Override
-    public void loadInput(Valuable value) {
-        this.inputSignal = value;
-        this.doOneIteration();
+    public Valuable runAlgorithm(Valuable input) {
+        return null;
     }
 
     public void addBlock(Block block) throws EnvironmentalException {
@@ -129,7 +129,8 @@ public class Environmental extends Block implements Operable {
             throw new EnvironmentalException("only one PIDControlxler is allowed in a environmental!");
         }
         Block pid = new PID(kp,ki ,kd, dt);
-        Wire pidOut = new Wire();
+        Wire pidOut = new Wire(new SignalFloat(Voltage.getUnit()));
+
         this.blocks.add(0,pid);
         this.addInputConnection(pid);
         this.addOutputConnection(pid);

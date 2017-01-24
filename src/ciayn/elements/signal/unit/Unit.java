@@ -11,9 +11,6 @@ public abstract class Unit {
         this.physicalQuantity=physicalQuantity;
         this.unit=unit;
     }
-    public Unit getUnit(){
-        return this;
-    }
     public String toString(){
        return this.unit;
     }
