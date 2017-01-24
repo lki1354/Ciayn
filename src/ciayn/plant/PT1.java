@@ -68,8 +68,8 @@ public class PT1 extends Plant {
 
     @Override
     public Value runAlgorithm(Value u) {
-        this.y1 = this.y0;
-        this.y0 = u;
+        this.y1.setValue(this.y0);
+        this.y0.setValue(u);
         if(this.dt == null){
             this.Ts = 1/(1+this.T.floatValue()/(this.y0.getTimeStamp() - this.y1.getTimeStamp()));
 
