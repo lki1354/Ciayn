@@ -1,8 +1,7 @@
 package ciayn.basicTerms;
 
 import ciayn.elements.Block;
-import ciayn.elements.signal.Signal;
-import ciayn.elements.signal.Valuable;
+import ciayn.elements.signal.Valueable;
 
 /**
  * Created by lukas on 17.01.17.
@@ -11,7 +10,7 @@ public class Derivative extends Block {
     private Number kd;
     private Number dt;
     private Number lastInput;
-    private Valuable diff;
+    private Valueable diff;
 
     public Derivative(Number kd, Number dt){
         this.kd = kd;
@@ -29,8 +28,8 @@ public class Derivative extends Block {
     }
 
     @Override
-    public void loadInput(Valuable value) {
-        this.diff = value;
+    public void loadInput(Valueable valueable) {
+        this.diff = valueable;
         this.diff.subtractValue(this.lastInput);
         this.diff.multiplyValue(this.kd);
         this.diff.divideValue(this.dt);

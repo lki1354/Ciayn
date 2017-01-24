@@ -1,18 +1,17 @@
 package ciayn.controller;
 
-import ciayn.elements.Block;
-import ciayn.elements.signal.Valuable;
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PD extends Block {
+public class PD extends Controller{
     private Number kd;
     private Number kp;
     private Number dt;
-    private Valuable up = null;
-    private Valuable ud = null;
-    private Valuable e1 = null;
+    private Value up = null;
+    private Value ud = null;
+    private Value e1 = null;
 
     public PD(Number kd, Number kp){
         this.kd = kd;
@@ -43,9 +42,9 @@ public class PD extends Block {
     }
 
     @Override
-    public Valuable runAlgorithm(Valuable e) {
+    public Value runAlgorithm(Value e) {
         this.ud = e;
-        this.ud.subtractValue(this.e1.getValue());
+        this.ud.subtractValue(this.e1);
         this.ud.multiplyValue(this.kd);
         this.ud.divideValue(this.dt);
 
@@ -60,5 +59,10 @@ public class PD extends Block {
     }
     public Number getKp() {
         return this.kp;
+    }
+
+    @Override
+    public void initController(Value value) {
+
     }
 }

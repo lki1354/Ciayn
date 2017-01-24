@@ -24,7 +24,7 @@ public class ReadingFloat extends ValueFloat {
         super(value);
         this.unit = unit;
     }
-    public ReadingFloat(float value,long timeStemp, Unit unit){
+    public ReadingFloat(float value,float timeStemp, Unit unit){
         super(value,timeStemp);
         this.unit = unit;
     }
@@ -36,7 +36,7 @@ public class ReadingFloat extends ValueFloat {
     }
     @Override
     public void setValue(Number value) {
-        this.timeStamp = System.nanoTime();
+        this.timeStamp = plant.nanoTime();
         this.value = value.floatValue();
     }
     @Override

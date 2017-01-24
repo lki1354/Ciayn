@@ -1,85 +1,102 @@
 package ciayn.controller;
 
-import ciayn.elements.Block;
-import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PID extends Block {
-    private float kd;
-    private float kp;
-    private float ki;
-    private float dt;
-    private float lastInput;
-    private Signal out = new Signal();
-    private Signal e = new Signal();
-    private Signal p = new Signal();
-    private Signal i = new Signal();
-    private Signal d = new Signal();
+public class PID extends Controller {
+    private Number k;
+    private Number Td;
+    private Number Ti;
+    private Number dt;
+    private Number lastInput;
+    private Value sum;
+    private Value u;
+    private Value i;
+    private Value d;
 
-    public PID(float kp, float ki, float kd, float dt){
-        this.kd = kd;
+    private void initValues(Class c) throws IllegalAccessException, InstantiationException {
+        this.sum = (Value) c.newInstance();
+        this.u = (Value) c.newInstance();
+        this.i = (Value) c.newInstance();
+        this.d = (Value) c.newInstance();
+    }
+
+    public PID(Class c,Number k, Number Ti, Number Td, Number dt) throws IllegalAccessException, InstantiationException {
+        this.k = k;
+        this.Ti = Ti;
+        this.Td = Td;
         this.dt = dt;
         this.lastInput = 0;
+        initValues(c);
     }
-    public PID(float kd, float dt, float lastInit){
-        this.kd = kd;
-        this.dt = dt;
-        this.lastInput = lastInit;
-    }
-    public PID(){
-        this.kd = 0;
+    public PID(Class c,Number k, Number Ti, Number Td) throws InstantiationException, IllegalAccessException {
+        this.k = k;
+        this.Ti = Ti;
+        this.Td = Td;
         this.lastInput = 0;
+        initValues(c);
     }
 
-    @Override
-    public void loadInput(Signal error) {
-        this.p.setValue(error.getValue()*this.kp);
-        this.i.addValue(error.getValue()*this.ki*this.dt);
-        this.d.setValue((error.getValue()-this.lastInput) * this.kd / this.dt);
-        this.out.setValue(p.getValue()+i.getValue()+d.getValue());
-        this.output.loadInput(this.out );
+    public Number getTd() {
+        return this.Td;
     }
 
-    public void loadInput(Signal target, Signal actual) {
-        this.e.setValue(target.getValue()-actual.getValue());
-        this.p.setValue(e.getValue()*this.kp);
-        this.i.addValue(e.getValue()*this.ki*this.dt);
-        this.d.setValue((e.getValue()-this.lastInput) * this.kd / this.dt);
-        this.out.setValue(p.getValue()+i.getValue()+d.getValue());
-        this.output.loadInput(this.out );
+    public void setKd(Number Td) {
+        this.Td = Td;
     }
 
-    public float getKd() {
-        return this.kd;
-    }
-
-    public void setKd(float kd) {
-        this.kd = kd;
-    }
-
-    public float getDt() {
+    public Number getDt() {
         return this.dt;
     }
 
-    public void setDt(float dt) {
+    public void setDt(Number dt) {
         this.dt = dt;
     }
 
-    public float getKp() {
-        return this.kp;
+    public Number getKp() {
+        return this.k;
     }
 
-    public void setKp(float kp) {
-        this.kp = kp;
+    public void setKp(Number k) {
+        this.k = k;
     }
 
-    public float getKi() {
-        return ki;
+    public Number getKi() {
+        return Ti;
     }
 
-    public void setKi(float ki) {
-        this.ki = ki;
+    public void setKi(Number Ti) {
+        this.Ti = Ti;
+    }
+
+    @Override
+    public Value runAlgorithm(Value e) {
+        this.dt = e.getTimeStamp() - this.u.getTimeStamp();
+        this.u.setValue(e);
+
+        this.d.setValue(e);
+        this.d.subtractValue(this.lastInput);
+        this.d.divideValue(this.dt);
+
+        this.i.setValue(e);
+        this.sum.addValue(e);
+        this.i.addValue(this.sum);
+        this.i.multiplyValue(this.Ti);
+
+        this.u.addValue(this.d);
+        this.u.addValue(this.i);
+        this.u.multiplyValue(this.k);
+
+        this.lastInput = e.getValue();
+        return this.u;
+    }
+
+    @Override
+    public void initController(Value value) {
+        this.sum.setValue(value);
+        this.u = value;
+        this.u = value;
     }
 }

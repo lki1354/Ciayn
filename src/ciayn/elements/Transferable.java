@@ -1,18 +1,16 @@
 package ciayn.elements;
 
 
-import ciayn.elements.signal.Valuable;
+import ciayn.elements.signal.Value;
 
 public interface Transferable {
 
-    void addOutputConnection(Transferable connection) throws TransferableException;
-    boolean isInputConnected();
-    void addInputConnection(Transferable input);
+    void addOutputConnection(Input input) throws TransferableException;
+    //boolean isInputConnected();
+    void addInputConnection(Output output);
 
-    void removeOutputConnection(Transferable connection) throws TransferableException;
+    //void removeOutputConnection(Transferable connection) throws TransferableException;
 
-    void loadInput(Valuable value);
-
-    void draw();
+    void loadInput(Value value);
 
 }

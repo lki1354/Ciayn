@@ -9,4 +9,5 @@ public interface Operable {
     void pause(int waitTime);
     void stop();
     void setInterval(int deltaTime);
+    long getInterval();
 }

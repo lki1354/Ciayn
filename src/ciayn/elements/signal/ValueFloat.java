@@ -3,21 +3,25 @@ package ciayn.elements.signal;
 /**
  * Created by lukas on 22.01.17.
  */
-public class ValueFloat implements Valuable {
+public class ValueFloat extends Value {
     protected float value;
-    protected long timeStamp;
+    protected float timeStamp;
 
+    public ValueFloat(){
+        this.value = 0;
+        this.timeStamp = 0;
+    }
 
     public ValueFloat(float value){
         this.setValue(value);
     }
 
-    public ValueFloat(float value, long timeStamp){
+    public ValueFloat(float value, float timeStamp){
         this.setValue(value,timeStamp);
     }
 
     @Override
-    public float getValue() {
+    public Number getValue() {
         return this.value;
     }
 
@@ -27,7 +31,13 @@ public class ValueFloat implements Valuable {
     }
 
     @Override
-    public void setValue(Number value, long timeStamp){
+    public void setValue(Value value) {
+        this.setValue(value.getValue());
+        this.setTimeStamp(value.getTimeStamp());
+    }
+
+    @Override
+    public void setValue(Number value, float timeStamp){
         this.value = value.floatValue();
         this.timeStamp = timeStamp;
     }
@@ -38,8 +48,18 @@ public class ValueFloat implements Valuable {
     }
 
     @Override
+    public void addValue(Value toAdd) {
+        this.addValue(toAdd.getValue());
+    }
+
+    @Override
     public void subtractValue(Number toSubtract) {
         this.value -= toSubtract.floatValue();
+    }
+
+    @Override
+    public void subtractValue(Value toSubtract) {
+        this.subtractValue(toSubtract.getValue());
     }
 
     @Override
@@ -50,13 +70,17 @@ public class ValueFloat implements Valuable {
     @Override
     public void divideValue(Number toDivide) {
         this.value /= toDivide.floatValue();
+        if(Float.isNaN(value)){
+            this.value = 0f;
+        }
     }
     @Override
-    public long getTimeStamp() {
+    public float getTimeStamp() {
         return timeStamp;
     }
     @Override
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(float timeStamp) {
         this.timeStamp = timeStamp;
     }
+
 }

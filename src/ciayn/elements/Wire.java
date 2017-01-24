@@ -1,62 +1,47 @@
 package ciayn.elements;
 
-import ciayn.elements.signal.Signal;
-import ciayn.elements.signal.Valuable;
 
-import java.util.ArrayList;
-import java.util.List;
+import ciayn.elements.signal.Updater;
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 13.01.17.
  */
-public class Wire implements Transferable{
-    private List<Transferable>outputs = new ArrayList<>();
-    private boolean isConnected = false;
-    private Signal signal = null;
+public class Wire extends Updater implements Transferable{
+    private Input wireOutput = null;
+    private Output wireInput = null;
 
-    public Wire(Signal signal){
-        this.signal = signal;
-    }
-
-    public void addOutputConnection(Transferable connection){
-        if(!connection.isInputConnected()) {
-            outputs.add(connection);
-            connection.addInputConnection(this);
-        }
+    public Wire(Value initValue){
+        this.wireOutput = new Input(initValue);
     }
 
     @Override
-    public boolean isInputConnected() {
-        return this.isConnected;
+    public void addOutputConnection(Input input){
+        this.wireOutput= input;
     }
 
     @Override
-    public void addInputConnection(Transferable input) {
-        this.isConnected = true;
+    public void addInputConnection(Output output) {
+        this.wireInput = output;
     }
 
     @Override
-    public void removeOutputConnection(Transferable connection) throws TransferableException {
-        if (!outputs.remove(connection)) {
-            throw new TransferableException("connection is not connected with this blocks");
-        }
-
+    public void loadInput(Value value){
+        this.wireOutput.setValue(value);
+     //   for (Transferable output: outputs ) {
+     //       output.loadInput(value);
+     //   }
     }
+
+    public Output getWireInput() {
+        return wireInput;
+    }
+    public Input getWireOutput() {
+        return wireOutput;
+    }
+
     @Override
-    public void loadInput(Valuable value){
-        this.signal.setActualValue(value);
-        for (Transferable output: outputs ) {
-            output.loadInput(value);
-        }
+    public Value updateActualValue() {
+        return this.wireOutput.getValue();
     }
-
-    @Override
-    public void draw() {
-        System.out.println("       ");
-        System.out.println("-------");
-        for ( Transferable output: outputs) {
-            output.draw();
-        }
-    }
-
 }

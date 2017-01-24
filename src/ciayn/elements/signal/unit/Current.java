@@ -4,12 +4,15 @@ package ciayn.elements.signal.unit;
  * Created by lukas on 22.01.17.
  */
 public class Current extends Unit {
-    private static Current current = new Current();
+    private static Current instance = null;
 
     private Current(){
         super("Current","A");
     }
-    public Unit getUnit(){
-        return this.current;
+    public static Unit getUnit(){
+        if(instance == null) {
+            instance = new Current();
+        }
+        return instance;
     }
 }

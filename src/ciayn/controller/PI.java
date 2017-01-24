@@ -1,74 +1,75 @@
 package ciayn.controller;
 
-import ciayn.elements.Block;
-import ciayn.elements.signal.Signal;
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PI extends Block {
-    private float kp;
-    private float ki;
-    private float dt;
-    private float lastInput;
-    private Signal out = new Signal();
-    private Signal e = new Signal();
-    private Signal p = new Signal();
-    private Signal i = new Signal();
+public class PI extends Controller {
+    private Number k;
+    private Number Ti;
+    private Number dt;
+    private Value sum;
+    private Value u;
+    private Value i;
 
-    public PI(float ki, float dt){
-        this.ki = ki;
+    public PI(Number Ti, Number dt){
+        this.Ti = Ti;
         this.dt = dt;
-        this.lastInput = 0;
     }
-    public PI(float kd, float dt, float lastInit){
-        this.ki = kd;
+    public PI(Number kd, Number dt, Number initSum){
+        this.Ti = kd;
         this.dt = dt;
-        this.lastInput = lastInit;
+        this.sum.setValue(initSum);
     }
     public PI(){
-        this.ki = 0;
-        this.lastInput = 0;
-    }
-
-    @Override
-    public void loadInput(Signal error) {
-        this.p.setValue(error.getValue()*this.kp);
-        this.i.addValue(error.getValue()*this.ki*this.dt);
-        this.out.setValue(p.getValue()+i.getValue());
-        this.output.loadInput(this.out );
-    }
-
-    public void loadInput(Signal target, Signal actual) {
-        this.e.setValue(target.getValue()-actual.getValue());
-        this.p.setValue(e.getValue()*this.kp);
-        this.i.addValue(e.getValue()*this.ki*this.dt);
-        this.out.setValue(p.getValue()+i.getValue());
-        this.output.loadInput(this.out );
+        this.Ti = 0;
     }
 
 
-    public float getDt() {
+    public Number getDt() {
         return this.dt;
     }
 
-    public void setDt(float dt) {
+    public void setDt(Number dt) {
         this.dt = dt;
     }
 
-    public float getKp() {
-        return this.kp;
+    public Number getKp() {
+        return this.k;
     }
 
-    public void setKp(float kp) {
-        this.kp = kp;
+    public void setKp(Number k) {
+        this.k = k;
     }
 
-    public float getKi() {
-        return ki;
+    public Number getKi() {
+        return Ti;
     }
 
-    public void setKi(float ki) {
-        this.ki = ki;
+    public void setKi(Number Ti) {
+        this.Ti = Ti;
+    }
+
+    @Override
+    public Value runAlgorithm(Value e) {
+        this.dt = e.getTimeStamp() - this.u.getTimeStamp();
+        this.u = e;
+
+        this.i = e;
+        this.sum.addValue(e);
+        this.i.addValue(this.sum);
+        this.i.multiplyValue(this.Ti);
+
+
+        this.u.addValue(this.i);
+        this.u.multiplyValue(this.k);
+
+        return this.u;
+    }
+
+    @Override
+    public void initController(Value value) {
+
     }
 }
