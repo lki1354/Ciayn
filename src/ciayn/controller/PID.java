@@ -12,18 +12,18 @@ public class PID implements Controller {
     private Number dt;
     private Number lastInput;
     private Value sum;
-    private Value u;
-    private Value i;
-    private Value d;
+    private Value up;
+    private Value ui;
+    private Value ud;
 
     private void initValues(Class c) throws IllegalAccessException, InstantiationException {
         this.sum = (Value) c.newInstance();
-        this.u = (Value) c.newInstance();
-        this.i = (Value) c.newInstance();
-        this.d = (Value) c.newInstance();
+        this.up = (Value) c.newInstance();
+        this.ui = (Value) c.newInstance();
+        this.ud = (Value) c.newInstance();
     }
 
-    public PID(Class c,Number k, Number Ti, Number Td, Number dt) throws IllegalAccessException, InstantiationException {
+    public PID(Class c, Number k, Number Ti, Number Td, Number dt) throws IllegalAccessException, InstantiationException {
         this.k = k;
         this.Ti = Ti;
         this.Td = Td;
@@ -31,7 +31,7 @@ public class PID implements Controller {
         this.lastInput = 0;
         initValues(c);
     }
-    public PID(Class c,Number k, Number Ti, Number Td) throws InstantiationException, IllegalAccessException {
+    public PID(Class c, Number k, Number Ti, Number Td) throws InstantiationException, IllegalAccessException {
         this.k = k;
         this.Ti = Ti;
         this.Td = Td;
@@ -71,27 +71,31 @@ public class PID implements Controller {
         this.Ti = Ti;
     }
 
-    @Override
-    public Value runAlgorithm(Value e) {
+    protected Value runAlgorithmPIDController(Value e) {
         if (this.dt == null) {
-            this.dt = e.getTimeStamp() - this.u.getTimeStamp();
+            this.dt = e.getTimeStamp() - this.up.getTimeStamp();
         }
-        this.u.setValue(e);
+        this.up.setValue(e);
 
-        this.d.setValue(e);
-        this.d.subtractValue(this.lastInput);
-        this.d.divideValue(this.dt);
+        this.ud.setValue(e);
+        this.ud.subtractValue(this.lastInput);
+        this.ud.divideValue(this.dt);
 
-        this.i.setValue(e);
+        this.ui.setValue(e);
+        this.ui.addValue(this.sum);
+        this.ui.multiplyValue(this.Ti);
         this.sum.addValue(e);
-        this.i.addValue(this.sum);
-        this.i.multiplyValue(this.Ti);
 
-        this.u.addValue(this.d);
-        this.u.addValue(this.i);
-        this.u.multiplyValue(this.k);
+        this.up.addValue(this.ud);
+        this.up.addValue(this.ui);
+        this.up.multiplyValue(this.k);
 
         this.lastInput = e.getValue();
-        return this.u;
+        return this.up;
+    }
+
+    @Override
+    public Value runAlgorithm(Value e) {
+        return runAlgorithmPIDController(e);
     }
 }

@@ -20,7 +20,9 @@ public  class TestThe1 {
             Output u = new Output(new ValueFloat(0f),uActual);
             Output x = new Output(new ValueFloat(0f),xActual);
 
-            Env pid = EnvController.createEnvPID(ValueFloat.class, 0.1f, 0.2f, 0f, 0.001f, w, x.createInput(), u);
+            //Env pid = EnvController.createEnvPID(ValueFloat.class, 0.1f, 0.2f, 0f, 0.001f, w, x.createInput(), u);
+            Env pid = EnvController.createEnvController(ValueFloat.class, 0.1f, 0.2f, 0.001f, w, x.createInput(), u);
+            //Env pid = EnvController.createEnvPI(ValueFloat.class, 0.1f, 0.2f, 0.001f, w, x.createInput(), u);
 
             Env pt1 = EnvPlant.createEnvPT1(ValueFloat.class,2f,1f,0.001f,u.createInput(),x);
             int i = 0;

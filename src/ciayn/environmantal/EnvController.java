@@ -36,12 +36,21 @@ public class EnvController extends Env {
         env.setFeedback(feedback);
         return env;
     }
+    public static EnvController createEnvPD(Class c, Number k, Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
+        EnvController env =  new EnvController(c, new PDold(c,k,Td,dt), output );
+        env.setSetpoint(setpoit);
+        env.setFeedback(feedback);
+        return env;
+    }
     public static EnvController createEnvController(Class c, Number k, Number Ti,Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
         return createEnvPID(c,k,Ti,Td,dt,setpoit,feedback,output);
     }
     public static EnvController createEnvController(Class c, Number k, Number Ti,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
         return createEnvPI(c,k,Ti,dt,setpoit,feedback,output);
     }
+   // public static EnvController createEnvController(Class c, Number k, Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
+   //     return createEnvPI(c,k,Td,dt,setpoit,feedback,output);
+   // }
 
     public void setController(Controller controller){
        this.controller = controller;

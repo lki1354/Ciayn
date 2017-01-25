@@ -5,78 +5,60 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 17.01.17.
  */
-public class PI implements Controller{
+public class PI extends IController{
     private Number k;
-    private Number Ti;
-    private Number dt;
-    private Value sum;
-    private Value u;
-    private Value i;
+    private Value up = null;
 
-      private void initValues(Class c) throws IllegalAccessException, InstantiationException {
-        this.sum = (Value) c.newInstance();
-        this.u = (Value) c.newInstance();
-        this.i = (Value) c.newInstance();
-    }
-
-    public PI(Class c,Number Ti, Number dt) throws InstantiationException, IllegalAccessException {
-        this.Ti = Ti;
-        this.dt = dt;
-        initValues(c);
-    }
-    public PI(Class c,Number kd, Number dt, Number initSum) throws InstantiationException, IllegalAccessException {
-        this.Ti = kd;
-        this.dt = dt;
-        this.sum.setValue(initSum);
-        initValues(c);
-    }
-    public PI(Class c) throws InstantiationException, IllegalAccessException {
-        this.Ti = 0;
-        initValues(c);
-    }
-
-
-    public Number getDt() {
-        return this.dt;
-    }
-
-    public void setDt(Number dt) {
-        this.dt = dt;
-    }
-
-    public Number getKp() {
-        return this.k;
-    }
-
-    public void setKp(Number k) {
+    /**
+     * Instructor for proportional and integral controller
+     *
+     * @param c  Class which data type the controller has to use
+     * @param k Controller multiplication constant
+     * @param Ti time constant for the integral part
+     * @param dt sample time of the controller
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public PI(Class c, Number k, Number Ti, Number dt) throws IllegalAccessException, InstantiationException {
+        super(c, Ti, dt);
         this.k = k;
+        initValues(c);
     }
 
-    public Number getKi() {
-        return Ti;
+    /**
+     * Instructor for proportional and integral controller
+     *
+     * @param c  Class which data type the controller has to use
+     * @param k Controller multiplication constant
+     * @param Ti time constant for the integral part
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public PI(Class c, Number k, Number Ti) throws InstantiationException, IllegalAccessException {
+        super(c, Ti);
+        this.k = k;
+        initValues(c);
     }
 
-    public void setKi(Number Ti) {
-        this.Ti = Ti;
+    private void initValues(Class c) throws IllegalAccessException, InstantiationException {
+        this.up = (Value) c.newInstance();
     }
 
     @Override
     public Value runAlgorithm(Value e) {
-        if (this.dt == null) {
-            this.dt = e.getTimeStamp() - this.i.getTimeStamp();
-        }
-        this.u.setValue(e);
 
-        this.i.setValue(e);
-        this.sum.addValue(e);
-        this.i.addValue(this.sum);
-        this.i.multiplyValue(this.Ti);
+        this.up.setValue(e);
+        this.up.addValue(this.runAlgorithmIController(e));
+        this.up.multiplyValue(this.k);
 
-
-        this.u.addValue(this.i);
-        this.u.multiplyValue(this.k);
-
-        return this.u;
+        return this.up;
     }
 
+    public Number getK() {
+        return k;
+    }
+
+    public void setK(Number k) {
+        this.k = k;
+    }
 }
