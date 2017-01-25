@@ -37,7 +37,7 @@ public class EnvController extends Env {
         return env;
     }
     public static EnvController createEnvPD(Class c, Number k, Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
-        EnvController env =  new EnvController(c, new PDold(c,k,Td,dt), output );
+        EnvController env =  new EnvController(c, new PD(c,k,Td,dt), output );
         env.setSetpoint(setpoit);
         env.setFeedback(feedback);
         return env;
