@@ -1,14 +1,11 @@
 package ciayn.elements;
 
-import ciayn.elements.signal.Callbackable;
-import ciayn.elements.signal.Updatable;
-import ciayn.elements.signal.Updater;
 import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 24.01.17.
  */
-public class Input implements Callbackable{
+public class Input implements Callable {
     private Value value = null;
     private Updatable updater = null;
 

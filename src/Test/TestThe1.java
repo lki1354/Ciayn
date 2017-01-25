@@ -13,8 +13,8 @@ import ciayn.elements.signal.*;
 public  class TestThe1 {
         public static void main(String args[]) throws Exception {
 
-            Callbackable uActual = value -> System.out.println("u="+value.getValue()+" after "+value.getTimeStamp()+"sec");
-            Callbackable xActual = value -> System.out.println("x="+value.getValue()+" after "+value.getTimeStamp()+"sec");
+            Callable uActual = value -> System.out.println("u="+value.getValue()+" after "+value.getTimeStamp()+"sec");
+            Callable xActual = value -> System.out.println("x="+value.getValue()+" after "+value.getTimeStamp()+"sec");
 
             Input w = new Input(new ValueFloat(2.0f));
             Output u = new Output(new ValueFloat(0f),uActual);

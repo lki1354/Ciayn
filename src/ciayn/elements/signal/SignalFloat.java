@@ -1,5 +1,6 @@
 package ciayn.elements.signal;
 
+import ciayn.elements.Updatable;
 import ciayn.elements.signal.unit.Unit;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class SignalFloat extends Signal {
     private List<ValueFloat> Values = new ArrayList<>();
-    private Updater updater = null;
+    private Updatable updater = null;
     private ReadingFloat actual;
 
     public SignalFloat(Unit unit){
@@ -26,7 +27,7 @@ public class SignalFloat extends Signal {
         return this.Values;
     }
     @Override
-    public void setUpdater(Updater updater){
+    public void setUpdater(Updatable updater){
         this.updater= updater;
     }
 

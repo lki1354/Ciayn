@@ -1,8 +1,5 @@
 package ciayn.elements;
 
-import ciayn.elements.signal.Callbackable;
-import ciayn.elements.signal.Updatable;
-import ciayn.elements.signal.Updater;
 import ciayn.elements.signal.Value;
 
 /**
@@ -10,9 +7,9 @@ import ciayn.elements.signal.Value;
  */
 public class Output implements Updatable {
     private Value value = null;
-    private Callbackable callback = null;
+    private Callable callback = null;
 
-    public Output(Value value, Callbackable callback){
+    public Output(Value value, Callable callback){
         this.value = value;
         this.callback = callback;
     }
@@ -22,7 +19,7 @@ public class Output implements Updatable {
     }
 
 
-    public Output(Callbackable callback){
+    public Output(Callable callback){
         this.setCallback(callback);
     }
 
@@ -41,7 +38,7 @@ public class Output implements Updatable {
         }
     }
 
-    public void setCallback(Callbackable callback) {
+    public void setCallback(Callable callback) {
         this.callback = callback;
     }
 

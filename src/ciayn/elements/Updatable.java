@@ -1,4 +1,6 @@
-package ciayn.elements.signal;
+package ciayn.elements;
+
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 13.01.17.
