@@ -1,7 +1,6 @@
-package ciayn;
+package ciayn.environmantal;
 
 import ciayn.elements.Input;
-import ciayn.elements.Operable;
 import ciayn.elements.Output;
 
 import java.util.ArrayList;

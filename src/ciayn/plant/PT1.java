@@ -1,12 +1,11 @@
 package ciayn.plant;
 
-import ciayn.EnvPlant;
 import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PT1 extends Plant {
+public class PT1 implements Plant {
     private Number K;
     private Number T;
     private Number dt = null;
@@ -81,11 +80,5 @@ public class PT1 extends Plant {
         this.y0.multiplyValue(this.Ts);
         this.y0.addValue(this.y1.getValue());
         return this.y0;
-    }
-
-    @Override
-    public void initPlant(Value value) {
-        this.y0 = value;
-        this.y1 = value;
     }
 }

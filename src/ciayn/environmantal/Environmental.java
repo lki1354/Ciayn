@@ -1,10 +1,10 @@
-package ciayn;
+package ciayn.environmantal;
 
 import ciayn.elements.*;
 import ciayn.elements.signal.Signal;
 
 
-public abstract class Environmental extends Env {
+public class Environmental extends Env {
 
     public Environmental(Input input, Output output){
         super(output);
@@ -15,8 +15,8 @@ public abstract class Environmental extends Env {
         inputSignals.add(input);
     }
 
-    public void addInput(Wire input){
-        this.addInput(new Input(input.getWireOutput().getValue()) );
+    public void addInput(Signal signal){
+        this.addInput(signal.getInput() );
     }
 
 

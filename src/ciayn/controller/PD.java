@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 17.01.17.
  */
-public class PD extends Controller{
+public class PD implements Controller{
     private Number kd;
     private Number kp;
     private Number dt;
@@ -61,8 +61,4 @@ public class PD extends Controller{
         return this.kp;
     }
 
-    @Override
-    public void initController(Value value) {
-
-    }
 }

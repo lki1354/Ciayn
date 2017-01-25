@@ -60,4 +60,8 @@ public class SignalFloat extends Signal {
         return this.actual;
     }
 
+    @Override
+    public void callbackActualValue(Value value) {
+       this.setActualValue(value);
+    }
 }

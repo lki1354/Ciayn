@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 17.01.17.
  */
-public class PI extends Controller {
+public class PI implements Controller{
     private Number k;
     private Number Ti;
     private Number dt;
@@ -68,8 +68,4 @@ public class PI extends Controller {
         return this.u;
     }
 
-    @Override
-    public void initController(Value value) {
-
-    }
 }

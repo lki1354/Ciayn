@@ -1,8 +1,8 @@
 package Test;
 
-import ciayn.Env;
-import ciayn.EnvController;
-import ciayn.EnvPlant;
+import ciayn.environmantal.Env;
+import ciayn.environmantal.EnvController;
+import ciayn.environmantal.EnvPlant;
 import ciayn.elements.*;
 import ciayn.elements.signal.*;
 
@@ -16,8 +16,7 @@ public  class TestThe1 {
             Callbackable uActual = value -> System.out.println("u="+value.getValue()+" after "+value.getTimeStamp()+"sec");
             Callbackable xActual = value -> System.out.println("x="+value.getValue()+" after "+value.getTimeStamp()+"sec");
 
-            Input w = new Input(new ValueFloat(3.0f));
-            //Input x = new Input(new ValueFloat(0f));
+            Input w = new Input(new ValueFloat(2.0f));
             Output u = new Output(new ValueFloat(0f),uActual);
             Output x = new Output(new ValueFloat(0f),xActual);
 
@@ -26,7 +25,7 @@ public  class TestThe1 {
             Env pt1 = EnvPlant.createEnvPT1(ValueFloat.class,2f,1f,0.001f,u.createInput(),x);
             int i = 0;
 
-            while (i<= 400) {
+            while (i<= 2000) {
                 pid.runOneIteration();
                 pt1.runOneIteration();
                 i++;

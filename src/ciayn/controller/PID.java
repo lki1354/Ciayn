@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 17.01.17.
  */
-public class PID extends Controller {
+public class PID implements Controller {
     private Number k;
     private Number Td;
     private Number Ti;
@@ -93,12 +93,5 @@ public class PID extends Controller {
 
         this.lastInput = e.getValue();
         return this.u;
-    }
-
-    @Override
-    public void initController(Value value) {
-        this.sum.setValue(value);
-        this.u = value;
-        this.u = value;
     }
 }
