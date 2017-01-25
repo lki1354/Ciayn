@@ -28,7 +28,7 @@ public class Output implements Updatable {
     }
 
     public Value getValue() {
-        return value;
+        return this.value;
     }
 
     public void setValue(Value value) {

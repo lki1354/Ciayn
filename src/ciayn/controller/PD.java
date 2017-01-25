@@ -13,14 +13,22 @@ public class PD implements Controller{
     private Value ud = null;
     private Value e1 = null;
 
-    public PD(Number kd, Number kp){
+    private void initValues(Class c) throws IllegalAccessException, InstantiationException {
+        this.up = (Value) c.newInstance();
+        this.ud = (Value) c.newInstance();
+        this.e1 = (Value) c.newInstance();
+    }
+
+    public PD(Class c,Number kd, Number kp) throws InstantiationException, IllegalAccessException {
         this.kd = kd;
         this.kp= kp;
+        initValues(c);
     }
-    public PD(Number kd, Number kp, Number dt){
+    public PD(Class c,Number kd, Number kp, Number dt) throws InstantiationException, IllegalAccessException {
         this.kd = kd;
         this.kp = kp;
         this.dt = dt;
+        initValues(c);
     }
     public PD(){
     }
@@ -43,14 +51,19 @@ public class PD implements Controller{
 
     @Override
     public Value runAlgorithm(Value e) {
-        this.ud = e;
+        if (this.dt == null) {
+            this.dt = e.getTimeStamp() - this.ud.getTimeStamp();
+        }
+        this.ud.setValue(e);
         this.ud.subtractValue(this.e1);
         this.ud.multiplyValue(this.kd);
         this.ud.divideValue(this.dt);
 
-        this.up = e;
-        this.up.multiplyValue(this.kp);
+        this.up.setValue(e);
         this.up.addValue(this.ud.getValue());
+        this.up.multiplyValue(this.kp);
+
+        this.e1.setValue(e);
         return this.up;
     }
 

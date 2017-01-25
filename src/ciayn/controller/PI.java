@@ -13,17 +13,26 @@ public class PI implements Controller{
     private Value u;
     private Value i;
 
-    public PI(Number Ti, Number dt){
+      private void initValues(Class c) throws IllegalAccessException, InstantiationException {
+        this.sum = (Value) c.newInstance();
+        this.u = (Value) c.newInstance();
+        this.i = (Value) c.newInstance();
+    }
+
+    public PI(Class c,Number Ti, Number dt) throws InstantiationException, IllegalAccessException {
         this.Ti = Ti;
         this.dt = dt;
+        initValues(c);
     }
-    public PI(Number kd, Number dt, Number initSum){
+    public PI(Class c,Number kd, Number dt, Number initSum) throws InstantiationException, IllegalAccessException {
         this.Ti = kd;
         this.dt = dt;
         this.sum.setValue(initSum);
+        initValues(c);
     }
-    public PI(){
+    public PI(Class c) throws InstantiationException, IllegalAccessException {
         this.Ti = 0;
+        initValues(c);
     }
 
 
@@ -53,10 +62,12 @@ public class PI implements Controller{
 
     @Override
     public Value runAlgorithm(Value e) {
-        this.dt = e.getTimeStamp() - this.u.getTimeStamp();
-        this.u = e;
+        if (this.dt == null) {
+            this.dt = e.getTimeStamp() - this.i.getTimeStamp();
+        }
+        this.u.setValue(e);
 
-        this.i = e;
+        this.i.setValue(e);
         this.sum.addValue(e);
         this.i.addValue(this.sum);
         this.i.multiplyValue(this.Ti);

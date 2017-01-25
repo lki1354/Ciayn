@@ -22,14 +22,17 @@ public class Input implements Callable {
     }
 
     public Value getValue() {
-        if (updater != null) {
+        if (this.updater != null) {
             this.value = this.updater.updateActualValue();
         }
-        return value;
+        return this.value;
     }
 
     public void setValue(Value value) {
         this.value = value;
+    }
+    public void setUpdater(Updatable updater) {
+        this.updater = updater;
     }
 
     @Override
