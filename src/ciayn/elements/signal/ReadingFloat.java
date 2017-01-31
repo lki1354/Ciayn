@@ -29,47 +29,6 @@ public class ReadingFloat extends ValueFloat {
         this.unit = unit;
     }
 
-    /*
-    @Override
-    public float getValue() {
-        return value;
-    }
-    @Override
-    public void setValue(Number value) {
-        this.timeStamp = plant.nanoTime();
-        this.value = value.floatValue();
-    }
-    @Override
-    public void setValue(Number value, long timeStamp) {
-        this.timeStamp = timeStamp;
-        this.value = value.floatValue();
-    }
-    @Override
-    public void addValue(Number toAdd){
-        this.value += toAdd.floatValue();
-    }
-    @Override
-    public void subtractValue(Number toSubtract){
-        this.value += toSubtract.floatValue();
-    }
-    @Override
-    public void multiplyValue(Number toMultiply){
-        this.value *= toMultiply.floatValue();
-    }
-    @Override
-    public void divideValue(Number toDivide){
-        this.value /= toDivide.floatValue();
-    }
-    @Override
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-    @Override
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-    */
-
     public Unit getUnit() {
         return unit;
     }

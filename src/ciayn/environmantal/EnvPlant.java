@@ -22,6 +22,13 @@ public class EnvPlant extends Env {
         initValues(c);
     }
 
+    public EnvPlant(Class c, Plant plant,Input input, Output output) throws InstantiationException, IllegalAccessException {
+        super(output);
+        this.setPlant(plant);
+        this.setInput(input);
+        initValues(c);
+    }
+
     public static EnvPlant createEnvPT1(Class c,Number K,Number T, Number dt,Input input ,Output output) throws IllegalAccessException, InstantiationException {
         EnvPlant env = new EnvPlant(c,new PT1(c,K,T,dt),output);
         env.setInput(input);

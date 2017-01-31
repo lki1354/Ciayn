@@ -1,9 +1,11 @@
 package ciayn.elements.signal;
 
+import ciayn.logger.Loggable;
+
 /**
  * Created by lukas on 22.01.17.
  */
-public abstract class Value {
+public abstract class Value implements Loggable {
     public abstract Number getValue();
     public abstract void setValue(Number value);
     public abstract void setValue(Value value);

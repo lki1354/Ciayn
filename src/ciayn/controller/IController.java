@@ -1,11 +1,12 @@
 package ciayn.controller;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public abstract class IController implements Controller {
+public abstract class IController extends LoggableAbstract implements Controller {
     private Number Ti;
     protected Number dt;
     private Value sum;
@@ -62,12 +63,21 @@ public abstract class IController implements Controller {
     protected Value runAlgorithmIController(Value e) {
         if (this.dt == null) {
             this.dt = e.getTimeStamp() - this.ui.getTimeStamp();
+            if (this.logger != null){
+                this.logger.log("delta time calculated dt=",this.dt);
+            }
         }
 
         this.ui.setValue(e);
         this.ui.addValue(this.sum);
         this.ui.multiplyValue(this.Ti);
         this.sum.addValue(e);
+
+        if (this.logger != null){
+            this.logger.log("error signal e",e);
+            this.logger.log("output signal ui",this.ui);
+            this.logger.log("intern signal sum",this.sum);
+        }
 
         return this.ui;
     }

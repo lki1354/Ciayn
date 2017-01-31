@@ -1,15 +1,17 @@
 package ciayn.elements.signal;
 
-import ciayn.elements.Input;
-
-import java.util.Iterator;
+import ciayn.logger.Loggable;
+import ciayn.logger.Logger;
 
 /**
  * Created by lukas on 22.01.17.
  */
-public class ValueInt extends Value {
+
+// \todo implement logging
+public class ValueInt extends Value implements Loggable{
     protected int value;
     protected float timeStamp;
+    protected Logger logger = null;
 
     public ValueInt(){
         this.value = 0;
@@ -88,4 +90,8 @@ public class ValueInt extends Value {
         this.timeStamp = timeStamp;
     }
 
+    @Override
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
 }

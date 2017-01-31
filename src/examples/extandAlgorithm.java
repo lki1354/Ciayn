@@ -26,7 +26,7 @@ public  class extandAlgorithm {
 
             Input w = new Input(new ValueFloat(2.0f));          //setpoint input of the controller
             Input x = new Input(new ValueFloat(0f),xActual);            // actual value (feedback) from the plant
-            Output u = new Output(new ValueFloat(0f),uActual);  // output of the controller
+            Output u = new Output();  // output of the controller
             Controller selfMade = new PController(ValueFloat.class,0.1) {
                 float maxOutputValue = 10;
                 float minOutputValue = -10;

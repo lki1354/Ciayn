@@ -1,11 +1,12 @@
 package ciayn.elements;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 24.01.17.
  */
-public class Output implements Updatable {
+public class Output extends LoggableAbstract implements Updatable {
     private Value value = null;
     private Callable callback = null;
 
@@ -16,6 +17,9 @@ public class Output implements Updatable {
 
     public Output(Value value){
         this.value = value;
+    }
+
+    public Output(){
     }
 
 
@@ -32,7 +36,10 @@ public class Output implements Updatable {
     }
 
     public void setValue(Value value) {
-        this.value = value;
+        this.value=value;
+        if (this.logger != null) {
+            this.logger.log(this.value);
+        }
         if (this.callback != null) {
             this.callback.callbackActualValue(this.value);
         }

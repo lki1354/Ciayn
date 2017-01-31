@@ -23,7 +23,7 @@ public  class runIterationSelf {
 
             Input w = new Input(new ValueFloat(2.0f));          //setpoint input of the controller
             Input x = new Input(new ValueFloat(0f));            // actual value (feedback) from the plant
-            Output u = new Output(new ValueFloat(0f),uActual);  // output of the controller
+            Output u = new Output(uActual);  // output of the controller
 
             Env pid = EnvController.createEnvPI(ValueFloat.class, 0.1f, 0.2f, 0.001f, w, x, u); //creates an PI controller
 

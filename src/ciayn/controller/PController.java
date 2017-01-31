@@ -1,11 +1,12 @@
 package ciayn.controller;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public abstract class PController implements Controller {
+public abstract class PController extends LoggableAbstract implements Controller {
     private Number k;
     private Value uk;
 
@@ -37,6 +38,11 @@ public abstract class PController implements Controller {
         this.uk.setValue(e);
 
         this.uk.multiplyValue(this.k);
+
+        if (this.logger != null){
+            this.logger.log("error signal e",e);
+            this.logger.log("output signal ud",this.uk);
+        }
 
         return this.uk;
     }
