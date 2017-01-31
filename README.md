@@ -10,6 +10,11 @@ It also use the Unit singleton to add a defined Unit to a Signal.
 The class ReadingFloat is the same as ValueFloat but includes the Unit of the value.
 How to use the Signal class is shown in the example "useSignal.java".
 
+## run an example
+* download CiaynExamplePlot.jar form release v0.5.1 and run 
+* java -jar CiaynExamplePlot.jar
+* at this example a PI controller and a PT1 plant is used
+ * PT1 element: https://de.wikipedia.org/wiki/PT1-Glied#Sprungantwort
  
 
 ## goals of the project
