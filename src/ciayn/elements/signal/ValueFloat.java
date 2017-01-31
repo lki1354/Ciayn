@@ -5,23 +5,23 @@ import ciayn.logger.Logger;
 /**
  * Created by lukas on 22.01.17.
  */
-public class ValueFloat extends Value{
+public class ValueFloat extends Value {
     protected float value;
     protected float timeStamp;
     protected Logger logger = null;
 
-    public ValueFloat(){
+    public ValueFloat() {
         this.value = 0;
-        this.timeStamp = System.nanoTime()/1000000000f;
+        this.timeStamp = System.nanoTime() / 1000000000f;
     }
 
-    public ValueFloat(float value){
+    public ValueFloat(float value) {
         this.setValue(value);
-        this.timeStamp = System.nanoTime()/1000000000f;
+        this.timeStamp = System.nanoTime() / 1000000000f;
     }
 
-    public ValueFloat(float value, float timeStamp){
-        this.setValue(value,timeStamp);
+    public ValueFloat(float value, float timeStamp) {
+        this.setValue(value, timeStamp);
     }
 
     @Override
@@ -31,9 +31,9 @@ public class ValueFloat extends Value{
 
     @Override
     public void setValue(Number value) {
-       this.value = value.floatValue();
-       this.timeStamp = System.nanoTime()/1000000000f;
-       logThis();
+        this.value = value.floatValue();
+        this.timeStamp = System.nanoTime() / 1000000000f;
+        logThis();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ValueFloat extends Value{
     }
 
     @Override
-    public void setValue(Number value, float timeStamp){
+    public void setValue(Number value, float timeStamp) {
         this.value = value.floatValue();
         this.timeStamp = timeStamp;
         logThis();
@@ -81,16 +81,18 @@ public class ValueFloat extends Value{
     @Override
     public void divideValue(Number toDivide) {
         this.value /= toDivide.floatValue();
-        if(Float.isNaN(value)){
+        if (Float.isNaN(value)) {
             logThis("Value is NaN after division");
             this.value = 0f;
         }
         logThis("Value was divided");
     }
+
     @Override
     public float getTimeStamp() {
         return this.timeStamp;
     }
+
     @Override
     public void setTimeStamp(float timeStamp) {
         this.timeStamp = timeStamp;
@@ -101,11 +103,13 @@ public class ValueFloat extends Value{
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
-    private void logThis(){
-        if (this.logger != null){
+
+    private void logThis() {
+        if (this.logger != null) {
             this.logger.log(this);
         }
     }
+
     private void logThis(String info) {
         if (this.logger != null) {
             this.logger.log(info, this);

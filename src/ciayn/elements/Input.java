@@ -10,15 +10,16 @@ public class Input extends LoggableAbstract implements Callable {
     private Value value = null;
     private Updatable updater = null;
 
-    public Input(Value value){
+    public Input(Value value) {
         this.value = value;
     }
-    public Input(Value value, Updatable updater){
+
+    public Input(Value value, Updatable updater) {
         this.updater = updater;
         this.value = value;
     }
 
-    public Output createOutput(){
+    public Output createOutput() {
         return new Output(this.value, this);
     }
 
@@ -35,6 +36,7 @@ public class Input extends LoggableAbstract implements Callable {
             this.logger.log(this.value);
         }
     }
+
     public void setUpdater(Updatable updater) {
         this.updater = updater;
     }

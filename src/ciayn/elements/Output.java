@@ -10,24 +10,24 @@ public class Output extends LoggableAbstract implements Updatable {
     private Value value = null;
     private Callable callback = null;
 
-    public Output(Value value, Callable callback){
+    public Output(Value value, Callable callback) {
         this.value = value;
         this.callback = callback;
     }
 
-    public Output(Value value){
+    public Output(Value value) {
         this.value = value;
     }
 
-    public Output(){
+    public Output() {
     }
 
 
-    public Output(Callable callback){
+    public Output(Callable callback) {
         this.setCallback(callback);
     }
 
-    public Input createInput(){
+    public Input createInput() {
         return new Input(this.value, this);
     }
 
@@ -36,7 +36,7 @@ public class Output extends LoggableAbstract implements Updatable {
     }
 
     public void setValue(Value value) {
-        this.value=value;
+        this.value = value;
         if (this.logger != null) {
             this.logger.log(this.value);
         }

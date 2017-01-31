@@ -15,26 +15,27 @@ public abstract class IController extends LoggableAbstract implements Controller
     /**
      * Instructor for integral controller
      *
-     * @param c Class which data type the controller has to use
+     * @param c  Class which data type the controller has to use
      * @param Ti time constant for the integral part
      * @param dt sample time of the controller
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public IController(Class c, Number Ti,Number dt) throws IllegalAccessException, InstantiationException {
+    public IController(Class c, Number Ti, Number dt) throws IllegalAccessException, InstantiationException {
         this.Ti = Ti;
         this.dt = dt;
         initI(c);
     }
-      /**
+
+    /**
      * Instuctor for itegral controller
      *
-     * @param c Class which data type the controller has to use
+     * @param c  Class which data type the controller has to use
      * @param Ti time constant for the integral part
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public IController(Class c,Number Ti) throws InstantiationException, IllegalAccessException {
+    public IController(Class c, Number Ti) throws InstantiationException, IllegalAccessException {
         this.Ti = Ti;
         initI(c);
     }
@@ -63,8 +64,8 @@ public abstract class IController extends LoggableAbstract implements Controller
     protected Value runAlgorithmIController(Value e) {
         if (this.dt == null) {
             this.dt = e.getTimeStamp() - this.ui.getTimeStamp();
-            if (this.logger != null){
-                this.logger.log("delta time calculated dt=",this.dt);
+            if (this.logger != null) {
+                this.logger.log("delta time calculated dt=", this.dt);
             }
         }
 
@@ -73,10 +74,10 @@ public abstract class IController extends LoggableAbstract implements Controller
         this.ui.multiplyValue(this.Ti);
         this.sum.addValue(e);
 
-        if (this.logger != null){
-            this.logger.log("error signal e",e);
-            this.logger.log("output signal ui",this.ui);
-            this.logger.log("intern signal sum",this.sum);
+        if (this.logger != null) {
+            this.logger.log("error signal e", e);
+            this.logger.log("output signal ui", this.ui);
+            this.logger.log("intern signal sum", this.sum);
         }
 
         return this.ui;

@@ -5,12 +5,13 @@ package ciayn.elements.signal.unit;
  */
 public class NoUnit extends Unit {
     private static NoUnit instance = null;
-    private NoUnit(){
-        super("no Unit","");
+
+    private NoUnit() {
+        super("no Unit", "");
     }
 
-    public static Unit getUnit(){
-        if(instance == null) {
+    public static Unit getUnit() {
+        if (instance == null) {
             instance = new NoUnit();
         }
         return instance;

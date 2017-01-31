@@ -16,16 +16,18 @@ public class ReadingFloat extends ValueFloat {
     //private long timeStamp;
     private Unit unit;
 
-    public ReadingFloat(Unit unit ){
+    public ReadingFloat(Unit unit) {
         super(0);
         this.unit = unit;
     }
-    public ReadingFloat(float value, Unit unit){
+
+    public ReadingFloat(float value, Unit unit) {
         super(value);
         this.unit = unit;
     }
-    public ReadingFloat(float value,float timeStemp, Unit unit){
-        super(value,timeStemp);
+
+    public ReadingFloat(float value, float timeStemp, Unit unit) {
+        super(value, timeStemp);
         this.unit = unit;
     }
 

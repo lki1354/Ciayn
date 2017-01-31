@@ -15,12 +15,13 @@ public abstract class Env implements Operable {
     protected List<Input> inputSignals = new ArrayList<>();
     protected Output outputSignal = null;
 
-    public Env(Output output){
+    public Env(Output output) {
         this.setOutput(output);
     }
-   public void setOutput(Output output){
+
+    public void setOutput(Output output) {
         this.outputSignal = output;
-   }
+    }
 
     @Override
     public void run() {
@@ -30,21 +31,25 @@ public abstract class Env implements Operable {
                 process();
             }
         };
-        timekeeper.scheduleAtFixedRate(runProcess,0,interval);
+        timekeeper.scheduleAtFixedRate(runProcess, 0, interval);
     }
-    private void updateInputSignals(){
-         for (Input input: this.inputSignals ) {
+
+    private void updateInputSignals() {
+        for (Input input : this.inputSignals) {
             input.getValue();
         }
     }
-    private void process(){
+
+    private void process() {
         this.updateInputSignals();
         this.doOneIteration();
     }
-    protected void doOneIteration(){
+
+    protected void doOneIteration() {
         System.out.println("... do one iteration");
     }
-    public void runOneIteration(){
+
+    public void runOneIteration() {
         process();
     }
 
