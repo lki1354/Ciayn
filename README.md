@@ -9,6 +9,7 @@ The class SignalFloat is for log all values into a list at a connection.
 It also use the Unit singleton to add a defined Unit to a Signal.
 The class ReadingFloat is the same as ValueFloat but includes the Unit of the value.
 How to use the Signal class is shown in the example "useSignal.java".
+
  
 
 ## goals of the project
@@ -19,6 +20,9 @@ How to use the Signal class is shown in the example "useSignal.java".
     * a P, PD, PI, PID controller must be possible to use
     * the controller has to read actual values from the plant and write the output to the plant
     * the controller has to run independent form the environmental
+
+## documentation
+A HTML documentation of the Project is deposited in "./documentation/html-docs/".
 
 ## UML diagrams
 In the folder "./documentation/UML diagrams" the UML diagrams form the current design is documented.
