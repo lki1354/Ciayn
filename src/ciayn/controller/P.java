@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 25.01.17.
  */
-public class P extends PController{
+public class P extends PController {
 
     /**
      * Instructor for the proportional controller

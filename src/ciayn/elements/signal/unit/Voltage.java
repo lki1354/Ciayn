@@ -5,12 +5,13 @@ package ciayn.elements.signal.unit;
  */
 public class Voltage extends Unit {
     private static Voltage instance = null;
-    private Voltage(){
-        super("Voltage","V");
+
+    private Voltage() {
+        super("Voltage", "V");
     }
 
-    public static Unit getUnit(){
-        if(instance == null) {
+    public static Unit getUnit() {
+        if (instance == null) {
             instance = new Voltage();
         }
         return instance;

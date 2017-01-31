@@ -15,21 +15,30 @@ import java.util.List;
  */
 
 
-public abstract class Signal extends LoggableAbstract implements Updatable,Callable {
+public abstract class Signal extends LoggableAbstract implements Updatable, Callable {
     protected Input input;
     protected Output output;
+
     //public Signal(){}
     public abstract List getSignalValues();
+
     public abstract void setUpdater(Updatable updater);
+
     public abstract void setActualValue(Number value);
+
     public abstract void setActualValue(Value value);
+
     public abstract void setActualValue(Number value, float timeStemp);
+
     public abstract Value getActualValue();
+
     public abstract Unit getUnit();
-    public Input getInput(){
+
+    public Input getInput() {
         return this.input;
     }
-    public Output getOutput(){
+
+    public Output getOutput() {
         return this.output;
     }
 }

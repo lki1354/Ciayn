@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 17.01.17.
  */
-public class PI extends IController{
+public class PI extends IController {
     private Number k;
     private Value up = null;
 
@@ -13,7 +13,7 @@ public class PI extends IController{
      * Instructor for proportional and integral controller
      *
      * @param c  Class which data type the controller has to use
-     * @param k Controller multiplication constant
+     * @param k  Controller multiplication constant
      * @param Ti time constant for the integral part
      * @param dt sample time of the controller
      * @throws IllegalAccessException
@@ -29,7 +29,7 @@ public class PI extends IController{
      * Instructor for proportional and integral controller
      *
      * @param c  Class which data type the controller has to use
-     * @param k Controller multiplication constant
+     * @param k  Controller multiplication constant
      * @param Ti time constant for the integral part
      * @throws IllegalAccessException
      * @throws InstantiationException
@@ -51,8 +51,8 @@ public class PI extends IController{
         this.up.addValue(this.runAlgorithmIController(e));
         this.up.multiplyValue(this.k);
 
-        if (this.logger != null){
-            this.logger.log("output signal up",this.up);
+        if (this.logger != null) {
+            this.logger.log("output signal up", this.up);
         }
         return this.up;
     }

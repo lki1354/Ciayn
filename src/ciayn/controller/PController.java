@@ -11,7 +11,8 @@ public abstract class PController extends LoggableAbstract implements Controller
     private Value uk;
 
     /**
-     *  Instructor for the proportional controller
+     * Instructor for the proportional controller
+     *
      * @param c Class which data type the controller has to use
      * @param k Controller multiplication constant
      * @throws IllegalAccessException
@@ -39,9 +40,9 @@ public abstract class PController extends LoggableAbstract implements Controller
 
         this.uk.multiplyValue(this.k);
 
-        if (this.logger != null){
-            this.logger.log("error signal e",e);
-            this.logger.log("output signal ud",this.uk);
+        if (this.logger != null) {
+            this.logger.log("error signal e", e);
+            this.logger.log("output signal ud", this.uk);
         }
 
         return this.uk;

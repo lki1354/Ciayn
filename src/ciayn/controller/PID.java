@@ -32,6 +32,7 @@ public class PID extends LoggableAbstract implements Controller {
         this.lastInput = 0;
         initValues(c);
     }
+
     public PID(Class c, Number k, Number Ti, Number Td) throws InstantiationException, IllegalAccessException {
         this.k = k;
         this.Ti = Ti;
@@ -75,8 +76,8 @@ public class PID extends LoggableAbstract implements Controller {
     protected Value runAlgorithmPIDController(Value e) {
         if (this.dt == null) {
             this.dt = e.getTimeStamp() - this.up.getTimeStamp();
-            if (this.logger != null){
-                this.logger.log("delta time calculated dt=",this.dt);
+            if (this.logger != null) {
+                this.logger.log("delta time calculated dt=", this.dt);
             }
         }
         this.up.setValue(e);
@@ -95,14 +96,14 @@ public class PID extends LoggableAbstract implements Controller {
         this.up.multiplyValue(this.k);
 
         this.lastInput = e.getValue();
-        if (this.logger != null){
-            this.logger.log("error signal e",e);
-            this.logger.log("output signal up",this.ui);
-            this.logger.log("intern signal ud",this.ui);
-            this.logger.log("intern signal lastInput",this.lastInput);
-            this.logger.log("intern signal ud",this.ui);
-            this.logger.log("intern signal ui",this.ui);
-            this.logger.log("intern signal sum",this.sum);
+        if (this.logger != null) {
+            this.logger.log("error signal e", e);
+            this.logger.log("output signal up", this.ui);
+            this.logger.log("intern signal ud", this.ui);
+            this.logger.log("intern signal lastInput", this.lastInput);
+            this.logger.log("intern signal ud", this.ui);
+            this.logger.log("intern signal ui", this.ui);
+            this.logger.log("intern signal sum", this.sum);
         }
         return this.up;
     }

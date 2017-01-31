@@ -5,7 +5,7 @@ import ciayn.elements.signal.Value;
 /**
  * Created by lukas on 25.01.17.
  */
-public class D extends DController{
+public class D extends DController {
     /**
      * Instructor for differential controller
      *

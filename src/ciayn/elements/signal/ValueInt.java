@@ -8,23 +8,23 @@ import ciayn.logger.Logger;
  */
 
 // \todo implement logging
-public class ValueInt extends Value implements Loggable{
+public class ValueInt extends Value implements Loggable {
     protected int value;
     protected float timeStamp;
     protected Logger logger = null;
 
-    public ValueInt(){
+    public ValueInt() {
         this.value = 0;
-        this.timeStamp = (int)System.nanoTime()/1000000;
+        this.timeStamp = (int) System.nanoTime() / 1000000;
     }
 
-    public ValueInt(int value){
+    public ValueInt(int value) {
         this.setValue(value);
-        this.timeStamp = (int)System.nanoTime()/1000000;
+        this.timeStamp = (int) System.nanoTime() / 1000000;
     }
 
-    public ValueInt(int value, float timeStamp){
-        this.setValue(value,timeStamp);
+    public ValueInt(int value, float timeStamp) {
+        this.setValue(value, timeStamp);
     }
 
     @Override
@@ -34,17 +34,17 @@ public class ValueInt extends Value implements Loggable{
 
     @Override
     public void setValue(Number value) {
-       this.value = value.intValue();
+        this.value = value.intValue();
     }
 
     @Override
     public void setValue(Value value) {
         this.value = value.getValue().intValue();
-        this.timeStamp = value.getTimeStamp() ;
+        this.timeStamp = value.getTimeStamp();
     }
 
     @Override
-    public void setValue(Number value, float timeStamp){
+    public void setValue(Number value, float timeStamp) {
         this.value = value.intValue();
         this.timeStamp = timeStamp;
     }
@@ -77,14 +77,16 @@ public class ValueInt extends Value implements Loggable{
     @Override
     public void divideValue(Number toDivide) {
         this.value /= toDivide.intValue();
-        if(Float.isNaN(value)){
+        if (Float.isNaN(value)) {
             this.value = 0;
         }
     }
+
     @Override
     public float getTimeStamp() {
         return timeStamp;
     }
+
     @Override
     public void setTimeStamp(float timeStamp) {
         this.timeStamp = timeStamp;

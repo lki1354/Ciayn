@@ -21,14 +21,15 @@ public class PT1 extends LoggableAbstract implements Plant {
         this.y1 = (Value) c.newInstance();
     }
 
-    public PT1(Class c,Number K,Number T, Number dt) throws InstantiationException, IllegalAccessException {
+    public PT1(Class c, Number K, Number T, Number dt) throws InstantiationException, IllegalAccessException {
         this.K = K;
         this.T = T;
         this.dt = dt;
-        this.Ts = 1/(1+T.floatValue()/dt.floatValue());
+        this.Ts = 1 / (1 + T.floatValue() / dt.floatValue());
         initValues(c);
     }
-    public PT1(Class c, Number K,Number T) throws InstantiationException, IllegalAccessException {
+
+    public PT1(Class c, Number K, Number T) throws InstantiationException, IllegalAccessException {
         this.K = K;
         this.T = T;
         initValues(c);
@@ -70,22 +71,22 @@ public class PT1 extends LoggableAbstract implements Plant {
     public Value runAlgorithm(Value u) {
         this.y1.setValue(this.y0);
         this.y0.setValue(u);
-        if(this.dt == null){
-            this.Ts = 1/(1+this.T.floatValue()/(this.y0.getTimeStamp() - this.y1.getTimeStamp()));
+        if (this.dt == null) {
+            this.Ts = 1 / (1 + this.T.floatValue() / (this.y0.getTimeStamp() - this.y1.getTimeStamp()));
 
-        }else{
-            this.Ts = 1/(1+T.floatValue()/dt.floatValue());
+        } else {
+            this.Ts = 1 / (1 + T.floatValue() / dt.floatValue());
         }
         this.y0.multiplyValue(this.K);
         this.y0.subtractValue(this.y1.getValue());
         this.y0.multiplyValue(this.Ts);
         this.y0.addValue(this.y1.getValue());
-        this.y0.setTimeStamp(System.nanoTime()/1000000000f);
+        this.y0.setTimeStamp(System.nanoTime() / 1000000000f);
 
-        if (this.logger != null){
-            this.logger.log("output signal y0",this.y0);
-            this.logger.log("internal signal y1",this.y1);
-            this.logger.log("internal signal Ts",this.Ts);
+        if (this.logger != null) {
+            this.logger.log("output signal y0", this.y0);
+            this.logger.log("internal signal y1", this.y1);
+            this.logger.log("internal signal Ts", this.Ts);
         }
 
         return this.y0;

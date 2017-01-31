@@ -6,11 +6,12 @@ package ciayn.elements.signal.unit;
 public class Angle extends Unit {
     private static Angle instance = null;
 
-    private Angle(){
-        super("Angle","°");
+    private Angle() {
+        super("Angle", "°");
     }
-    public static Unit getUnit(){
-        if(instance == null) {
+
+    public static Unit getUnit() {
+        if (instance == null) {
             instance = new Angle();
         }
         return instance;

@@ -22,34 +22,35 @@ public class EnvPlant extends Env {
         initValues(c);
     }
 
-    public EnvPlant(Class c, Plant plant,Input input, Output output) throws InstantiationException, IllegalAccessException {
+    public EnvPlant(Class c, Plant plant, Input input, Output output) throws InstantiationException, IllegalAccessException {
         super(output);
         this.setPlant(plant);
         this.setInput(input);
         initValues(c);
     }
 
-    public static EnvPlant createEnvPT1(Class c,Number K,Number T, Number dt,Input input ,Output output) throws IllegalAccessException, InstantiationException {
-        EnvPlant env = new EnvPlant(c,new PT1(c,K,T,dt),output);
+    public static EnvPlant createEnvPT1(Class c, Number K, Number T, Number dt, Input input, Output output) throws IllegalAccessException, InstantiationException {
+        EnvPlant env = new EnvPlant(c, new PT1(c, K, T, dt), output);
         env.setInput(input);
         return env;
     }
 
-    public void setPlant(Plant plant){
-       this.plant = plant;
+    public void setPlant(Plant plant) {
+        this.plant = plant;
     }
+
     public Plant getPlant() {
         return plant;
     }
 
     @Override
-    protected void doOneIteration(){
+    protected void doOneIteration() {
         this.x = this.plant.runAlgorithm(this.inputSignals.get(0).getValue());
         this.outputSignal.setValue(this.x);
     }
 
 
     public void setInput(Input input) {
-        this.inputSignals.add(0,input);
+        this.inputSignals.add(0, input);
     }
 }

@@ -5,9 +5,14 @@ package ciayn.environmantal;
  */
 public interface Operable {
     void run();
+
     void pause();
+
     void pause(int waitTime);
+
     void stop();
+
     void setInterval(int deltaTime);
+
     long getInterval();
 }

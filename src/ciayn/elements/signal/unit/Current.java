@@ -6,11 +6,12 @@ package ciayn.elements.signal.unit;
 public class Current extends Unit {
     private static Current instance = null;
 
-    private Current(){
-        super("Current","A");
+    private Current() {
+        super("Current", "A");
     }
-    public static Unit getUnit(){
-        if(instance == null) {
+
+    public static Unit getUnit() {
+        if (instance == null) {
             instance = new Current();
         }
         return instance;
