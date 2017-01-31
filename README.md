@@ -5,6 +5,12 @@ Controller implementation as you need (Ciayn)
 A few examples are listed in the folder "./src/examples". This examples should help
 to use the module.
 
+The class SignalFloat is for log all values into a list at a connection. 
+It also use the Unit singleton to add a defined Unit to a Signal.
+The class ReadingFloat is the same as ValueFloat but includes the Unit of the value.
+How to use the Signal class is shown in the example "useSignal.java".
+ 
+
 ## goals of the project
 1. learn java programming
 2. use the object oriented programming concept
@@ -21,8 +27,8 @@ In the folder "./documentation/UML diagrams" the UML diagrams form the current d
 ### design decisions and learn process
 #### first part
 The first work what I did before starting programming was to think about the controller 
-structure. The first version of the model is drawn in the PDF "./documentation/OOP_Projekt_161216.pdf". The next step was to 
-learn the java language. But I stated very fast to program the first working version
+structure. The first version of the model is drawn in the PDF "./documentation/OOP_Projekt_161216.pdf". 
+The next step was to learn the java language. But I stated very fast to program the first working version
 of the project (https://github.com/lki1354/Ciayn/releases/tag/v0.1).
 During the implementation of v0.1 I read a lot about java peculiarities. So i learned
 the language a bit by doing programming and with that I saw what is possible in java and 
@@ -41,3 +47,8 @@ has to be done before starting programming although this could be change later. 
 on a paper. I definitely learned a new programming language.
 For me this project was good to build a object oriented module but maybe It makes more
 sense to realize a controller in another language.
+
+In the first draft of the module design I want to use generics that the user can decide 
+if he want to use the controller with float, double or integer values. But in the first implementation 
+I became clear to me that this won't work with java. Because basic arithmetic operations are not applicable 
+if generics are used. That is why I created the abstract class "Value".

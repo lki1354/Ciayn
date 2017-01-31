@@ -45,5 +45,6 @@ public  class ControllerAndPlantSeparateLog {
                 i++;
                 TimeUnit.MILLISECONDS.sleep((long)(deltaTime*1000));
             }
+            System.out.println("END");
         }
 }

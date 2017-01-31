@@ -32,5 +32,15 @@ public  class SimpleUseLogger {
 
 
             pid.run();
+
+            System.out.println("start Example SimpleUseLogger");
+            try {
+                Thread.sleep(70);
+                pid.stop();
+                System.out.println("End ");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 }

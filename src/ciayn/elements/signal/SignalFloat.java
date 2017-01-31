@@ -1,5 +1,7 @@
 package ciayn.elements.signal;
 
+import ciayn.elements.Input;
+import ciayn.elements.Output;
 import ciayn.elements.Updatable;
 import ciayn.elements.signal.unit.Unit;
 
@@ -17,13 +19,15 @@ public class SignalFloat extends Signal {
     private ReadingFloat actual;
 
     public SignalFloat(Unit unit){
-        actual = new ReadingFloat(unit);
+        this.actual = new ReadingFloat(unit);
+        this.input = new Input(actual,this);
+        this.output = new Output(actual,this);
     }
     private void updateList(){
         this.Values.add( new ValueFloat(this.actual.getValue().floatValue(),this.actual.getTimeStamp()) );
     }
     @Override
-    public List getSignalValues(){
+    public List<ValueFloat> getSignalValues(){
         return this.Values;
     }
     @Override
@@ -43,6 +47,9 @@ public class SignalFloat extends Signal {
     public void setActualValue(Number value){
         this.actual.setValue(value);
         updateList();
+        if(this.logger != null) {
+            this.logger.log(this.actual);
+        }
     }
 
     @Override
@@ -55,6 +62,9 @@ public class SignalFloat extends Signal {
         this.actual.setValue(value);
         this.actual.setTimeStamp(timeStemp);
         updateList();
+        if(this.logger != null) {
+            this.logger.log(this.actual);
+        }
     }
     @Override
     public Value getActualValue(){
@@ -64,5 +74,8 @@ public class SignalFloat extends Signal {
     @Override
     public void callbackActualValue(Value value) {
        this.setActualValue(value);
+    }
+    public Unit getUnit(){
+        return this.actual.getUnit();
     }
 }

@@ -28,8 +28,8 @@ public  class extandAlgorithm {
             Input x = new Input(new ValueFloat(0f),xActual);            // actual value (feedback) from the plant
             Output u = new Output();  // output of the controller
             Controller selfMade = new PController(ValueFloat.class,0.1) {
-                float maxOutputValue = 10;
-                float minOutputValue = -10;
+                float maxOutputValue = 100;
+                float minOutputValue = -100;
                 @Override
                 public Value runAlgorithm(Value e) {
                     Value u = this.runAlgorithmPController(e);
@@ -38,14 +38,25 @@ public  class extandAlgorithm {
                     }else if (u.getValue().floatValue() < minOutputValue){
                         u.setValue(minOutputValue);
                     }
+                    System.out.println("Example LOG: "+u.toString()+": value="+u.getValue());
                     return u;
                 }
             };
 
-            Env pid = new EnvController(Float.class,selfMade,w, x, u);
+            Env pid = new EnvController(ValueFloat.class,selfMade,w, x, u);
             pid.setInterval(10);
 
 
             pid.run();
+            System.out.println("Example extandAlgorithm");
+            try {
+                Thread.sleep(50);
+                pid.stop();
+                System.out.println("End");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // \todo info:example not working
+
         }
 }

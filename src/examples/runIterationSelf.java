@@ -30,5 +30,6 @@ public  class runIterationSelf {
 
             x.setValue(actualInputValue);
             pid.runOneIteration();
+            System.out.println("END");
         }
 }

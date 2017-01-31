@@ -31,5 +31,14 @@ public  class SimpleUse {
 
 
             pid.run();
+            System.out.println("Example SimpleUse");
+            try {
+                Thread.sleep(60);
+                pid.stop();
+                System.out.println("End");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 }
