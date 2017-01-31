@@ -29,6 +29,7 @@ public class ValueFloat extends Value{
     @Override
     public void setValue(Number value) {
        this.value = value.floatValue();
+       this.timeStamp = System.nanoTime()/1000000000f;
     }
 
     @Override

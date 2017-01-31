@@ -79,6 +79,7 @@ public class PT1 implements Plant {
         this.y0.subtractValue(this.y1.getValue());
         this.y0.multiplyValue(this.Ts);
         this.y0.addValue(this.y1.getValue());
+        this.y0.setTimeStamp(System.nanoTime()/1000000000f);
         return this.y0;
     }
 }
