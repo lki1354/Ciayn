@@ -2,7 +2,8 @@
 Controller implementation as you need (Ciayn)
 
 ## how to use the module
-
+A few examples are listed in the folder "./src/examples". This examples should help
+to use the module.
 
 ## goals of the project
 1. learn java programming
