@@ -23,6 +23,7 @@ How to use the Signal class is shown in the example "useSignal.java".
 
 ## documentation
 A HTML documentation of the Project is deposited in "./documentation/html-docs/".
+The online Link is: https://rawgit.com/lki1354/Ciayn/master/documentation/html-docs/index.html
 
 ## UML diagrams
 In the folder "./documentation/UML diagrams" the UML diagrams form the current design is documented.
