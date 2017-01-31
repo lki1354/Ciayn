@@ -1,19 +1,21 @@
 package examples;
 
+import ciayn.controller.Controller;
+import ciayn.controller.PController;
 import ciayn.elements.Callable;
 import ciayn.elements.Input;
 import ciayn.elements.Output;
 import ciayn.elements.Updatable;
+import ciayn.elements.signal.Value;
 import ciayn.elements.signal.ValueFloat;
 import ciayn.environmantal.Env;
 import ciayn.environmantal.EnvController;
-import ciayn.environmantal.EnvPlant;
 
 /**
  * Created by lukas on 14.01.17.
  */
 
-public  class SimpleUse {
+public  class extandAlgorithm {
         public static void main(String args[]) throws Exception {
             float actualInputValue = 0;
 
@@ -25,8 +27,22 @@ public  class SimpleUse {
             Input w = new Input(new ValueFloat(2.0f));          //setpoint input of the controller
             Input x = new Input(new ValueFloat(0f),xActual);            // actual value (feedback) from the plant
             Output u = new Output(new ValueFloat(0f),uActual);  // output of the controller
+            Controller selfMade = new PController(ValueFloat.class,0.1) {
+                float maxOutputValue = 10;
+                float minOutputValue = -10;
+                @Override
+                public Value runAlgorithm(Value e) {
+                    Value u = this.runAlgorithmPController(e);
+                    if (u.getValue().floatValue() > maxOutputValue){
+                        u.setValue(maxOutputValue);
+                    }else if (u.getValue().floatValue() < minOutputValue){
+                        u.setValue(minOutputValue);
+                    }
+                    return u;
+                }
+            };
 
-            Env pid = EnvController.createEnvController(ValueFloat.class, 0.1f, 0.2f, 0.001f, w, x, u); //creates an PI controller
+            Env pid = new EnvController(Float.class,selfMade,w, x, u);
             pid.setInterval(10);
 
 

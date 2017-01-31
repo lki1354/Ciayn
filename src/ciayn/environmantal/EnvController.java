@@ -24,32 +24,39 @@ public class EnvController extends Env {
         this.setController(controller);
         initValues(c);
     }
+    public EnvController(Class c,Controller controller,Input setpoint, Input feedback,Output output) throws InstantiationException, IllegalAccessException {
+        super(output);
+        this.inputSignals.add(0,setpoint);
+        this.inputSignals.add(1,feedback);
+        this.setController(controller);
+        initValues(c);
+    }
     public static EnvController createEnvPID(Class c, Number k, Number Ti,Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
         EnvController env =  new EnvController(c, new PID(c,k,Ti,Td,dt), output );
         env.setSetpoint(setpoit);
         env.setFeedback(feedback);
         return env;
     }
-    public static EnvController createEnvPI(Class c, Number k, Number Ti,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
+    public static EnvController createEnvPI(Class c, Number k, Number Ti,  Number dt ,Input setpoint, Input feedback,Output output) throws Exception {
         EnvController env =  new EnvController(c, new PI(c,k,Ti,dt), output );
-        env.setSetpoint(setpoit);
+        env.setSetpoint(setpoint);
         env.setFeedback(feedback);
         return env;
     }
-    public static EnvController createEnvPD(Class c, Number k, Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
+    public static EnvController createEnvPD(Class c, Number k, Number Td,  Number dt ,Input setpoint, Input feedback,Output output) throws Exception {
         EnvController env =  new EnvController(c, new PD(c,k,Td,dt), output );
-        env.setSetpoint(setpoit);
+        env.setSetpoint(setpoint);
         env.setFeedback(feedback);
         return env;
     }
-    public static EnvController createEnvController(Class c, Number k, Number Ti,Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
-        return createEnvPID(c,k,Ti,Td,dt,setpoit,feedback,output);
+    public static EnvController createEnvController(Class c, Number k, Number Ti,Number Td,  Number dt ,Input setpoint, Input feedback,Output output) throws Exception {
+        return createEnvPID(c,k,Ti,Td,dt,setpoint,feedback,output);
     }
-    public static EnvController createEnvController(Class c, Number k, Number Ti,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
-        return createEnvPI(c,k,Ti,dt,setpoit,feedback,output);
+    public static EnvController createEnvController(Class c, Number k, Number Ti,  Number dt ,Input setpoint, Input feedback,Output output) throws Exception {
+        return createEnvPI(c,k,Ti,dt,setpoint,feedback,output);
     }
-   // public static EnvController createEnvController(Class c, Number k, Number Td,  Number dt ,Input setpoit, Input feedback,Output output) throws Exception {
-   //     return createEnvPI(c,k,Td,dt,setpoit,feedback,output);
+   // public static EnvController createEnvController(Class c, Number k, Number Td,  Number dt ,Input setpoint, Input feedback,Output output) throws Exception {
+   //     return createEnvPD(c,k,Td,dt,setpoint,feedback,output);
    // }
 
     public void setController(Controller controller){

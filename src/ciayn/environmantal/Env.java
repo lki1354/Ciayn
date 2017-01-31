@@ -64,8 +64,8 @@ public abstract class Env implements Operable {
     }
 
     @Override
-    public void setInterval(int deltaTime) {
-        interval = deltaTime;
+    public void setInterval(int deltaTimeMilliseconds) {
+        interval = deltaTimeMilliseconds;
     }
 
     @Override
