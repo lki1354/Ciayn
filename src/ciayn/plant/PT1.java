@@ -1,11 +1,12 @@
 package ciayn.plant;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PT1 implements Plant {
+public class PT1 extends LoggableAbstract implements Plant {
     private Number K;
     private Number T;
     private Number dt = null;
@@ -80,6 +81,13 @@ public class PT1 implements Plant {
         this.y0.multiplyValue(this.Ts);
         this.y0.addValue(this.y1.getValue());
         this.y0.setTimeStamp(System.nanoTime()/1000000000f);
+
+        if (this.logger != null){
+            this.logger.log("output signal y0",this.y0);
+            this.logger.log("internal signal y1",this.y1);
+            this.logger.log("internal signal Ts",this.Ts);
+        }
+
         return this.y0;
     }
 }

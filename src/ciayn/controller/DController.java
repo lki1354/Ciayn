@@ -1,11 +1,13 @@
 package ciayn.controller;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.Loggable;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public abstract class DController implements Controller {
+public abstract class DController extends LoggableAbstract implements Controller{
     private Number Td;
     private Number dt;
     private Number lastInput;
@@ -63,6 +65,9 @@ public abstract class DController implements Controller {
     public Value runAlgorithmDController(Value e) {
         if (this.dt == null) {
             this.dt = e.getTimeStamp() - this.ud.getTimeStamp();
+            if (this.logger != null){
+                this.logger.log("delta time calculated dt=",this.dt);
+            }
         }
 
         this.ud.setValue(e);
@@ -71,6 +76,10 @@ public abstract class DController implements Controller {
 
 
         this.lastInput = e.getValue();
+        if (this.logger != null){
+            this.logger.log("error signal e",e);
+            this.logger.log("output signal ud",this.ud);
+        }
         return this.ud;
     }
 }

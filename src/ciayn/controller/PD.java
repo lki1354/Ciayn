@@ -51,6 +51,9 @@ public class PD extends DController{
         this.up.addValue(this.runAlgorithmDController(e));
         this.up.multiplyValue(this.k);
 
+        if (this.logger != null){
+            this.logger.log("output signal up",this.up);
+        }
         return this.up;
     }
 

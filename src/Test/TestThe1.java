@@ -5,6 +5,8 @@ import ciayn.environmantal.EnvController;
 import ciayn.environmantal.EnvPlant;
 import ciayn.elements.*;
 import ciayn.elements.signal.*;
+import ciayn.logger.ConsoleLogger;
+import ciayn.logger.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,11 +19,14 @@ public  class TestThe1 {
 
             float deltaTime = 0.01f; //sec
 
-            Callable uActual = value -> System.out.println("u="+value.getValue()+" after "+value.getTimeStamp()+"sec");
+            Logger ulog = new ConsoleLogger("controller output u =");
+
+            //Callable uActual = value -> System.out.println("u="+value.getValue()+" after "+value.getTimeStamp()+"sec");
             Callable xActual = value -> System.out.println("x="+value.getValue()+" after "+value.getTimeStamp()+"sec");
 
             Input w = new Input(new ValueFloat(2.0f));
-            Output u = new Output(new ValueFloat(0f),uActual);
+            Output u = new Output();
+            u.setLogger(ulog);
             Output x = new Output(new ValueFloat(0f),xActual);
 
             //Env pid = EnvController.createEnvPID(ValueFloat.class, 0.1f, 0.2f, 0f, 0.001f, w, x.createInput(), u);
@@ -31,7 +36,7 @@ public  class TestThe1 {
             Env pt1 = EnvPlant.createEnvPT1(ValueFloat.class,2f,1f,0.001f,u.createInput(),x);
             int i = 0;
 
-            while (i<= 2000) {
+            while (i<= 20) {
                 pid.runOneIteration();
                 pt1.runOneIteration();
                 i++;

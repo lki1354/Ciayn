@@ -1,11 +1,12 @@
 package ciayn.controller;
 
 import ciayn.elements.signal.Value;
+import ciayn.logger.LoggableAbstract;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PID implements Controller {
+public class PID extends LoggableAbstract implements Controller {
     private Number k;
     private Number Td;
     private Number Ti;
@@ -74,6 +75,9 @@ public class PID implements Controller {
     protected Value runAlgorithmPIDController(Value e) {
         if (this.dt == null) {
             this.dt = e.getTimeStamp() - this.up.getTimeStamp();
+            if (this.logger != null){
+                this.logger.log("delta time calculated dt=",this.dt);
+            }
         }
         this.up.setValue(e);
 
@@ -91,6 +95,15 @@ public class PID implements Controller {
         this.up.multiplyValue(this.k);
 
         this.lastInput = e.getValue();
+        if (this.logger != null){
+            this.logger.log("error signal e",e);
+            this.logger.log("output signal up",this.ui);
+            this.logger.log("intern signal ud",this.ui);
+            this.logger.log("intern signal lastInput",this.lastInput);
+            this.logger.log("intern signal ud",this.ui);
+            this.logger.log("intern signal ui",this.ui);
+            this.logger.log("intern signal sum",this.sum);
+        }
         return this.up;
     }
 

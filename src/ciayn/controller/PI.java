@@ -51,6 +51,9 @@ public class PI extends IController{
         this.up.addValue(this.runAlgorithmIController(e));
         this.up.multiplyValue(this.k);
 
+        if (this.logger != null){
+            this.logger.log("output signal up",this.up);
+        }
         return this.up;
     }
 
