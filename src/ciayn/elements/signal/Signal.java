@@ -1,6 +1,11 @@
 package ciayn.elements.signal;
 
 
+import ciayn.elements.Callable;
+import ciayn.elements.Input;
+import ciayn.elements.Output;
+import ciayn.elements.Updatable;
+
 import java.util.List;
 
 /**
@@ -8,11 +13,19 @@ import java.util.List;
  */
 
 
-public abstract class Signal implements Updatable  {
+public abstract class Signal implements Updatable,Callable {
+    protected Input input;
+    protected Output output;
     public abstract List getSignalValues();
-    public abstract void setUpdater(Updater updater);
-    public abstract void setActualValue(float value);
-    public abstract void setActualValue(Valuable value);
-    public abstract void setActualValue(float value, long timeStemp);
-    public abstract Valuable getActualValue();
+    public abstract void setUpdater(Updatable updater);
+    public abstract void setActualValue(Number value);
+    public abstract void setActualValue(Value value);
+    public abstract void setActualValue(Number value, float timeStemp);
+    public abstract Value getActualValue();
+    public Input getInput(){
+        return input;
+    }
+    public Output getOutput(){
+        return output;
+    }
 }

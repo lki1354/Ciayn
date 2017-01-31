@@ -1,4 +1,4 @@
-package ciayn.elements;
+package ciayn.environmantal;
 
 /**
  * Created by lukas on 13.01.17.
@@ -9,4 +9,5 @@ public interface Operable {
     void pause(int waitTime);
     void stop();
     void setInterval(int deltaTime);
+    long getInterval();
 }

@@ -1,23 +1,27 @@
 package ciayn.elements.signal;
 
+import ciayn.elements.Input;
+
+import java.util.Iterator;
+
 /**
  * Created by lukas on 22.01.17.
  */
-public class ValueFloat extends Value{
-    protected float value;
+public class ValueInt extends Value {
+    protected int value;
     protected float timeStamp;
 
-    public ValueFloat(){
+    public ValueInt(){
         this.value = 0;
-        this.timeStamp = System.nanoTime()/1000000000f;
+        this.timeStamp = (int)System.nanoTime()/1000000;
     }
 
-    public ValueFloat(float value){
+    public ValueInt(int value){
         this.setValue(value);
-        this.timeStamp = System.nanoTime()/1000000000f;
+        this.timeStamp = (int)System.nanoTime()/1000000;
     }
 
-    public ValueFloat(float value, float timeStamp){
+    public ValueInt(int value, float timeStamp){
         this.setValue(value,timeStamp);
     }
 
@@ -28,25 +32,24 @@ public class ValueFloat extends Value{
 
     @Override
     public void setValue(Number value) {
-       this.value = value.floatValue();
-       this.timeStamp = System.nanoTime()/1000000000f;
+       this.value = value.intValue();
     }
 
     @Override
     public void setValue(Value value) {
-        this.setValue(value.getValue());
-        this.setTimeStamp(value.getTimeStamp());
+        this.value = value.getValue().intValue();
+        this.timeStamp = value.getTimeStamp() ;
     }
 
     @Override
     public void setValue(Number value, float timeStamp){
-        this.value = value.floatValue();
+        this.value = value.intValue();
         this.timeStamp = timeStamp;
     }
 
     @Override
     public void addValue(Number toAdd) {
-        this.value += toAdd.floatValue();
+        this.value += toAdd.intValue();
     }
 
     @Override
@@ -56,7 +59,7 @@ public class ValueFloat extends Value{
 
     @Override
     public void subtractValue(Number toSubtract) {
-        this.value -= toSubtract.floatValue();
+        this.value -= toSubtract.intValue();
     }
 
     @Override
@@ -66,19 +69,19 @@ public class ValueFloat extends Value{
 
     @Override
     public void multiplyValue(Number toMultiply) {
-        this.value *= toMultiply.floatValue();
+        this.value *= toMultiply.intValue();
     }
 
     @Override
     public void divideValue(Number toDivide) {
-        this.value /= toDivide.floatValue();
+        this.value /= toDivide.intValue();
         if(Float.isNaN(value)){
-            this.value = 0f;
+            this.value = 0;
         }
     }
     @Override
     public float getTimeStamp() {
-        return this.timeStamp;
+        return timeStamp;
     }
     @Override
     public void setTimeStamp(float timeStamp) {

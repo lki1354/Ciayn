@@ -1,64 +1,64 @@
 package ciayn.controller;
 
-import ciayn.elements.Block;
-import ciayn.elements.signal.Valuable;
+import ciayn.elements.signal.Value;
 
 /**
  * Created by lukas on 17.01.17.
  */
-public class PD extends Block {
-    private Number kd;
-    private Number kp;
-    private Number dt;
-    private Valuable up = null;
-    private Valuable ud = null;
-    private Valuable e1 = null;
+public class PD extends DController{
+    private Number k;
+    private Value up = null;
 
-    public PD(Number kd, Number kp){
-        this.kd = kd;
-        this.kp= kp;
-    }
-    public PD(Number kd, Number kp, Number dt){
-        this.kd = kd;
-        this.kp = kp;
-        this.dt = dt;
-    }
-    public PD(){
-    }
-
-    public Number getKd() {
-        return this.kd;
+    /**
+     * Instructor for proportional and differential controller
+     *
+     * @param c  Class which data type the controller has to use
+     * @param k Controller multiplication constant
+     * @param Td time constant for the differential part
+     * @param dt sample time of the controller
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public PD(Class c, Number k, Number Td, Number dt) throws IllegalAccessException, InstantiationException {
+        super(c, Td, dt);
+        this.k = k;
+        initValues(c);
     }
 
-    public void setKd(Number kd) {
-        this.kd = kd;
+    /**
+     * Instructor for proportional and differential controller
+     *
+     * @param c  Class which data type the controller has to use
+     * @param k Controller multiplication constant
+     * @param Td time constant for the differential part
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public PD(Class c, Number k, Number Td) throws InstantiationException, IllegalAccessException {
+        super(c, Td);
+        this.k = k;
+        initValues(c);
     }
 
-    public Number getDt() {
-        return this.dt;
-    }
-
-    public void setDt(Number dt) {
-        this.dt = dt;
+    private void initValues(Class c) throws IllegalAccessException, InstantiationException {
+        this.up = (Value) c.newInstance();
     }
 
     @Override
-    public Valuable runAlgorithm(Valuable e) {
-        this.ud = e;
-        this.ud.subtractValue(this.e1.getValue());
-        this.ud.multiplyValue(this.kd);
-        this.ud.divideValue(this.dt);
+    public Value runAlgorithm(Value e) {
 
-        this.up = e;
-        this.up.multiplyValue(this.kp);
-        this.up.addValue(this.ud.getValue());
+        this.up.setValue(e);
+        this.up.addValue(this.runAlgorithmDController(e));
+        this.up.multiplyValue(this.k);
+
         return this.up;
     }
 
-    public void setKp(Number kp) {
-        this.kp = kp;
+    public Number getK() {
+        return k;
     }
-    public Number getKp() {
-        return this.kp;
+
+    public void setK(Number k) {
+        this.k = k;
     }
 }
